@@ -13,8 +13,8 @@ rgrep = commands.getoutput(''' find %s -name '*.py' -type f ''' % (paths) )
 rgrep = rgrep.split('\n')
 for files in rgrep:
     open_f = open(files,'rw')
-    os.popen('touch /tmp/limpiando')
-    copy_f = open('/tmp/limpiando','w')
+    os.popen('touch /tmp/clean')
+    copy_f = open('/tmp/clean','w')
     for line in open_f.readlines():
 
         if line.find('from osv',0,8) >= 0:
@@ -45,5 +45,5 @@ for files in rgrep:
         else:
             copy_f.write(line)
 
-    os.popen('mv /tmp/limpiando %s ' % files)
+    os.popen('mv /tmp/clean %s ' % files)
     open_f.close()
