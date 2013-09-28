@@ -764,6 +764,15 @@ class import_product(object):
 
         return False
 
+    def get_uom(self, uom_brw):
+        if uom_brw:
+            uom_ids = con_dest.search('product.uom',[('name', '=', uom_brw.name),
+                                                     ('uom_type', '=', uom_brw.uom_type),
+                                                     ('rounding', '=', uom_brw.rounding)])
+            return uom_ids and uom_ids[0]
+
+        return False
+
     def get_journal(self, journal_brw, company):
         if journal_brw:
             journal_ids = con_dest.search('account.journal',[('name', '=', journal_brw.name),
@@ -853,6 +862,8 @@ class import_product(object):
                 'produce_delay': product_brw.produce_delay,
                 'valuation': product_brw.valuation,
                 'categ_id': self.create_category(product_brw.categ_id, company),
+                'uom_id': self.get_uom(product_brw.uom_id),
+                'uom_po_id': self.get_uom(product_brw.uom_po_id),
                 'property_stock_procurement':
                                 self.get_location(product_brw.property_stock_procurement, company),
                 'property_stock_production':
