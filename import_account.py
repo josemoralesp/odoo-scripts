@@ -903,3 +903,194 @@ class import_product(object):
                 product = con_orig.browse('product.product', product)
                 self.create_product(product, company_dest)
 
+class import_uom(object):
+
+    def get_category(self, uom_brw):
+        if uom_brw:
+            uom_ids = con_dest.search('product.uom.category',[('name', '=', uom_brw.name)])
+            if uom_ids:
+                return uom_ids and uom_ids[0]
+            else:
+                uom_id = con_dest.create('product.uom.category',{'name': uom_brw.name})
+                return uom_id
+
+        return False
+
+    def create_uom(self, uom_brw, company):
+        uom_id = False
+        uom_ids = con_dest.search('product.uom',[('name', '=', uom_brw.name),
+                                                 ('uom_type', '=', uom_brw.uom_type),
+                                                 ('rounding', '=', uom_brw.rounding)])
+        if uom_ids:
+            return uom_ids[0]
+
+        uom = {
+                'name': uom_brw.name,
+                'uom_type': uom_brw.uom_type,
+                'rounding': uom_brw.rounding,
+                'factor': uom_brw.factor,
+                'category_id': self.get_category(uom_brw.category_id)
+                }
+
+
+
+        print 'Creating uom %s' % uom_brw.name
+        try:
+            uom_id = con_dest.create('account.uom', uom)
+        except Exception, e:
+            print 'Error %s' % e
+        return uom_id
+
+
+    def main(self):
+        company_id = con_orig.search('res.company', [('name', '=', 'No me importa')])
+        company_id = company_id and company_id[0]
+        company_dest = con_dest.search('res.company', [('country_id.code', '=', 'VE')])
+        if company_id and company_dest:
+            company_dest = con_dest.browse('res.company', company_dest[0])
+            uom_data = con_orig.search('ir.model.data', [('model', '=', 'product.uom')])
+            uom_ids = []
+            for ids in uom_data:
+                data_brw = con_orig.browse('ir.model.data', ids)
+                uom_ids.append(data_brw.res_id)
+            uom_ids = con_orig.search('product.uom', [('company_id', '=', company_id)])
+            for uom in uom_ids:
+                uom = con_orig.browse('product.uom', uom)
+                self.create_uom(uom, company_dest)
+
+class import_account_asset(object):
+    def get_account(self, account_brw, company):
+        if account_brw:
+            account_ids = con_dest.search('account.account',[('name', '=', account_brw.name),
+                                                             ('code', '=', account_brw.code),
+                                                             ('company_id', '=', company.id)])
+            return account_ids and account_ids[0]
+
+        return False
+
+    def get_journal(self, journal_brw, company):
+        if journal_brw:
+            journal_ids = con_dest.search('account.journal',[('name', '=', journal_brw.name),
+                                                             ('code', '=', journal_brw.code),
+                                                             ('company_id', '=', company.id)])
+            return journal_ids and journal_ids[0]
+
+        return False
+
+    def get_category(self, category, company):
+        category_ids = con_dest.search('account.asset.asset',[('name', '=', category.name)])
+        if category_ids:
+            return category_ids[0]
+        else:
+            categorys = {
+                    'name': category.name,
+                    'method_time': category.method_time,
+                    'method_number': category.method_number,
+                    'method_period': category.method_period,
+                    'method': category.method,
+                    'prorata': category.prorata,
+                    'note': category.note,
+                    'open_asset': category.open_asset,
+                    'account_asset_id': self.get_account(category.account_asset_id, company), 
+                    'journal_id': self.get_journal(category.journal_id, company), 
+                    'account_depreciation_id': self.get_account(category.account_depreciation_id,
+                                                                company), 
+                    'account_depreciation_expense_id':
+                    self.get_account(category.account_depreciation_expense_id,
+                                                                company), 
+                    }
+
+            category_id = con_dest.create('account.account.category', categorys)
+
+            return category_id
+
+    def get_code(self, code, company):
+        account_ids = con_dest.search('account.account',[('code', '=', code),
+                                                         ('company_id', '=', company)])
+        if account_ids:
+            new_code = '%s-%s' %(code, 'R')
+            return self.get_code(new_code, company)
+
+        else:
+            return code
+
+    def get_partner_id(self, partner_brw, company):
+        if partner_brw:
+            partner_ids = con_dest.search('res.partner',[('name', '=', partner_brw.name),
+                                                         ('vat', '=', partner_brw.vat),
+                                                         ('company_id', '=', company.id)])
+            return partner_ids and partner_ids[0]
+
+        return False
+
+    def get_currency_id(self, currency_brw, company):
+        if currency_brw:
+            currency_ids = con_dest.search('res.currency',[('name', '=', currency_brw.name),
+                                                         ('company_id', '=', company.id)])
+            return currency_ids and currency_ids[0]
+
+        return False
+
+    def get_description(self, description):
+        lines = []
+        for descript in description:
+            line = {
+                    'name', descript.name,
+                    'sequence', descript.sequence,
+                    'amount', descript.amount,
+                    'move_check', descript.move_check,
+                    'remaining_value', descript.remaining_value,
+                    'depreciated_value', descript.depreciated_value,
+                    'depreciation_date', descript.depreciation_date,
+                    }
+            lines.append((0, 0, line))
+
+         return lines
+
+    def create_account(self, account_brw, company):
+        account_ids = con_dest.search('account.asset.asset',[('name', '=', account_brw.name),
+                                                         ('code', '=', account_brw.code),
+                                                         ('company_id', '=', company.id)])
+        if account_ids:
+            return account_ids[0]
+        account = {
+                'name': account_brw.name,
+                'type': account_brw.type,
+                'code': account_brw.code,
+                'purchase_value': account_brw.purchase_value,
+                'salvage_value': account_brw.salvage_value,
+                'salvage_value': account_brw.salvage_value,
+                'method': account_brw.method,
+                'method_time': account_brw.method_time,
+                'method_number': account_brw.method_number,
+                'method_period': account_brw.method_period,
+                'purchase_date': account_brw.purchase_date,
+                'prorata': account_brw.prorata,
+                'description_line_ids': self.get_description(account_brw.description_line_ids),
+                'category_id': self.get_category(account_brw.category_id, company),
+                'partner_id': self.get_partner_id(account_brw.partner_id, company.id),
+                'currency_id': self.get_currency_id(account_brw.currency_id, company.id),
+                'parent_id': account_brw.parent_id and \
+                                                self.create_account(account_brw.parent_id,
+                                                                    company) or False,
+                'company_id': company.id, 
+
+                }
+
+        print 'Creating acccount %s' % account_brw.name
+        account_id = con_dest.create('account.account', account)
+        return account_id
+
+    def main(self):
+        company_id = con_orig.search('res.company', ['name','=', 'No me importa'])
+        company_id = company_id and company_id[0]
+        company_dest = con_dest.search('res.company', [('country_id.code', '=', 'VE')])
+        if company_id and company_dest:
+            company_dest = con_dest.browse('res.company', company_dest[0])
+            account_ids = con_orig.search('account.asset.asset', [('company_id', '=', company_id)])
+            for account in con_orig.browse('accountasset.asset', account_ids):
+                self.create_account(account, company_dest)
+
+
+
+
