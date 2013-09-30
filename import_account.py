@@ -1,10 +1,10 @@
 import oerplib
 
-HOST=
-PORT=
-DB=
-USER=
-PASS=
+HOST='localhost'
+PORT=38069
+DB=''
+USER=''
+PASS='1234'
 
 con_dest = oerplib.OERP(
 server=HOST, 
@@ -14,11 +14,11 @@ port=PORT,
 
 con_dest.login(USER, PASS)
 
-HOST=
-PORT=
-DB=
-USER=
-PASS=
+HOST='localhost'
+PORT=38069
+DB=''
+USER=''
+PASS='1234'
 
 con_orig = oerplib.OERP(
 server=HOST, 
@@ -551,14 +551,14 @@ class import_journal(object):
         return journal_id
 
     def main(self):
-        company_id = con_orig.search('res.company', [('name', '=', 'No me importa')])
+        company_id = con_orig.search('res.company', [('name', '=', 'Bioderpac')])
         company_id = company_id and company_id[0] 
-        company_dest = con_dest.search('res.company', [('country_id.code', '=', 'VE')])
+        company_dest = con_dest.search('res.company', [('name', '=', 'Bioderpac')])
         if company_id and company_dest:
             company_dest = con_dest.browse('res.company', company_dest[0])
             journal_ids = con_orig.search('account.journal', [('company_id', '=', company_id)])
             for journal in con_orig.browse('account.journal', journal_ids):
-                create_journal(journal, company_dest)
+                self.create_journal(journal, company_dest)
 
 class import_partner(object):
     def get_account(self, account_brw, company):
@@ -1088,6 +1088,11 @@ class import_account_asset(object):
 
 
 
-
+asset = import_journal()
+asset.main()
 asset = import_tax()
+asset.main()
+asset = import_uom()
+asset.main()
+asset = import_product()
 asset.main()
