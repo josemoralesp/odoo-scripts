@@ -1,10 +1,10 @@
 import oerplib
 
-HOST=''
+HOST=
 PORT=
-DB=''
-USER=''
-PASS=''
+DB=
+USER=
+PASS=
 
 con_dest = oerplib.OERP(
 server=HOST, 
@@ -14,11 +14,11 @@ port=PORT,
 
 con_dest.login(USER, PASS)
 
-HOST=''
+HOST=
 PORT=
-DB=''
-USER=''
-PASS=''
+DB=
+USER=
+PASS=
 
 con_orig = oerplib.OERP(
 server=HOST, 
@@ -63,7 +63,6 @@ class import_accountV6(object):
             return account_ids[0]
         account = {
                 'name': account_brw.name,
-                'type': account_brw.type,
                 'code': self.get_code(account_brw.code, company.id),
                 'parent_id': account_brw.parent_id and \
                                                 self.create_account(account_brw.parent_id,
@@ -575,7 +574,7 @@ class import_partner(object):
         if partner:
             partner_id = con_dest.search('res.partner', [('name', '=', partner.name),
                                                          ('vat', '=', partner.vat),
-                                                         ('company_id', '=' company.id)])
+                                                         ('company_id', '=', company.id)])
             if partner_id:
                 return partner_id[0]
             else:
@@ -717,7 +716,7 @@ class import_tax(object):
                 'type_tax_use': tax_brw.type_tax_use,
                 'tax_voucher_ok': tax_brw.tax_voucher_ok,
                 'price_include': tax_brw.price_include,
-                'ret': tax_brw.ret,
+               # 'ret': tax_brw.ret,
                 'type': tax_brw.type,
                 'amount': tax_brw.amount,
                 'account_collected_voucher_id': self.get_account(tax_brw.account_collected_voucher_id, company), 
@@ -742,9 +741,9 @@ class import_tax(object):
 
 
     def main(self):
-        company_id = con_orig.search('res.company', [('name', '=', 'No me importa')])
+        company_id = con_orig.search('res.company', [('name', '=', 'Bioderpac')])
         company_id = company_id and company_id[0]
-        company_dest = con_dest.search('res.company', [('country_id.code', '=', 'VE')])
+        company_dest = con_dest.search('res.company', [('name', '=', 'Bioderpac')])
         if company_id and company_dest:
             company_dest = con_dest.browse('res.company', company_dest[0])
             tax_ids = con_orig.search('account.tax', [('company_id', '=', company_id)])
@@ -813,23 +812,16 @@ class import_product(object):
                 category_dict = {
                         'name': category.name,
                         'type': category.type,
-                        'parent_id': self.get_category([category.parent_id], company, True)
-                        'property_account_creditor_price_difference_categ':
-                        self.get_account(category.property_account_creditor_price_difference_categ,
-                                                             company), 
-                        'property_account_expense_categ':
-                        self.get_account(category.property_account_expense_categ, company), 
-                        'property_account_income_categ':
-                        self.get_account(category.property_account_income_categ, company), 
-                        'property_stock_account_input_categ':
-                        self.get_account(category.property_stock_account_input_categ, company), 
-                        'property_stock_account_output_categ':
-                        self.get_account(category.property_stock_account_output_categ, company), 
-                        'property_stock_valuation_account_id':
-                        self.get_account(category.property_stock_valuation_account_id, company), 
-                        'property_stock_journal':
-                        self.get_journal(category.property_stock_journal, company), 
-                        'parent_id': self.get_category([category.parent_id], company, True)
+                        'parent_id': self.create_category(category.parent_id, company),
+                       # 'property_account_creditor_price_difference_categ':
+                       # self.get_account(category.property_account_creditor_price_difference_categ,
+                       #                  company), 
+                        'property_account_expense_categ':self.get_account(category.property_account_expense_categ, company), 
+                        'property_account_income_categ': self.get_account(category.property_account_income_categ, company), 
+                        'property_stock_account_input_caqeg':self.get_account(category.property_stock_account_input_categ, company), 
+                        'property_stock_account_output_categ':self.get_account(category.property_stock_account_output_categ, company), 
+                        'property_stock_valuation_account_id':self.get_account(category.property_stock_valuation_account_id, company), 
+                        'property_stock_journal':self.get_journal(category.property_stock_journal, company), 
                         
                         }
                 categ_id = con_dest.create('product.category', category_dict)
@@ -870,9 +862,9 @@ class import_product(object):
                                 self.get_location(product_brw.property_stock_production, company),
                 'property_stock_inventory':
                                 self.get_location(product_brw.property_stock_inventory, company),
-                'property_account_creditor_price_difference':
-                           self.get_account(product_brw.property_account_creditor_price_difference,
-                                                            company), 
+               # 'property_account_creditor_price_difference':
+               #            self.get_account(product_brw.property_account_creditor_price_difference,
+               #                                             company), 
                 'property_account_income': self.get_account(product_brw.property_account_income,
                                                             company), 
                 'property_account_expense': self.get_account(product_brw.property_account_expense,
@@ -886,16 +878,17 @@ class import_product(object):
 
         print 'Creating product %s' % product_brw.name
         try:
-            product_id = con_dest.create('account.product', product)
+            product_id = con_dest.create('product.product', product)
         except Exception, e:
             print 'Error %s' % e
+            product_id = False
         return product_id
 
 
     def main(self):
-        company_id = con_orig.search('res.company', [('name', '=', 'No me importa')])
+        company_id = con_orig.search('res.company', [('name', '=', 'Bioderpac')])
         company_id = company_id and company_id[0]
-        company_dest = con_dest.search('res.company', [('country_id.code', '=', 'VE')])
+        company_dest = con_dest.search('res.company', [('name', '=', 'Bioderpac')])
         if company_id and company_dest:
             company_dest = con_dest.browse('res.company', company_dest[0])
             product_ids = con_orig.search('product.product', [('company_id', '=', company_id)])
@@ -907,11 +900,11 @@ class import_uom(object):
 
     def get_category(self, uom_brw):
         if uom_brw:
-            uom_ids = con_dest.search('product.uom.category',[('name', '=', uom_brw.name)])
+            uom_ids = con_dest.search('product.uom.categ',[('name', '=', uom_brw.name)])
             if uom_ids:
                 return uom_ids and uom_ids[0]
             else:
-                uom_id = con_dest.create('product.uom.category',{'name': uom_brw.name})
+                uom_id = con_dest.create('product.uom.categ',{'name': uom_brw.name})
                 return uom_id
 
         return False
@@ -936,16 +929,16 @@ class import_uom(object):
 
         print 'Creating uom %s' % uom_brw.name
         try:
-            uom_id = con_dest.create('account.uom', uom)
+            uom_id = con_dest.create('product.uom', uom)
         except Exception, e:
             print 'Error %s' % e
         return uom_id
 
 
     def main(self):
-        company_id = con_orig.search('res.company', [('name', '=', 'No me importa')])
+        company_id = con_orig.search('res.company', [('name', '=', 'Bioderpac')])
         company_id = company_id and company_id[0]
-        company_dest = con_dest.search('res.company', [('country_id.code', '=', 'VE')])
+        company_dest = con_dest.search('res.company', [('name', '=', 'Bioderpac')])
         if company_id and company_dest:
             company_dest = con_dest.browse('res.company', company_dest[0])
             uom_data = con_orig.search('ir.model.data', [('model', '=', 'product.uom')])
@@ -953,7 +946,9 @@ class import_uom(object):
             for ids in uom_data:
                 data_brw = con_orig.browse('ir.model.data', ids)
                 uom_ids.append(data_brw.res_id)
-            uom_ids = con_orig.search('product.uom', [('company_id', '=', company_id)])
+            uom_ids = con_orig.search('product.uom', [])
+           # uom_ids_all = con_orig.search('product.uom', [])
+           # uom_ids = list(set(uom_ids_all) - set(uom_ids))
             for uom in uom_ids:
                 uom = con_orig.browse('product.uom', uom)
                 self.create_uom(uom, company_dest)
@@ -978,11 +973,11 @@ class import_account_asset(object):
         return False
 
     def get_category(self, category, company):
-        category_ids = con_dest.search('account.asset.asset',[('name', '=', category.name)])
+        category_ids = con_dest.search('account.asset.category',[('name', '=', category.name)])
         if category_ids:
             return category_ids[0]
         else:
-            categorys = {
+            categories = {
                     'name': category.name,
                     'method_time': category.method_time,
                     'method_number': category.method_number,
@@ -995,12 +990,12 @@ class import_account_asset(object):
                     'journal_id': self.get_journal(category.journal_id, company), 
                     'account_depreciation_id': self.get_account(category.account_depreciation_id,
                                                                 company), 
-                    'account_depreciation_expense_id':
-                    self.get_account(category.account_depreciation_expense_id,
+                    'account_expense_depreciation_id':
+                    self.get_account(category.account_expense_depreciation_id,
                                                                 company), 
                     }
 
-            category_id = con_dest.create('account.account.category', categorys)
+            category_id = con_dest.create('account.asset.category', categories)
 
             return category_id
 
@@ -1034,18 +1029,18 @@ class import_account_asset(object):
     def get_description(self, description):
         lines = []
         for descript in description:
-            line = {
-                    'name', descript.name,
-                    'sequence', descript.sequence,
-                    'amount', descript.amount,
-                    'move_check', descript.move_check,
-                    'remaining_value', descript.remaining_value,
-                    'depreciated_value', descript.depreciated_value,
-                    'depreciation_date', descript.depreciation_date,
-                    }
-            lines.append((0, 0, line))
+            line = (0, 0, {
+                'name': descript.name,
+                'sequence': descript.sequence,
+                'amount': descript.amount,
+                'move_check': descript.move_check,
+                'remaining_value': descript.remaining_value,
+                'depreciated_value': descript.depreciated_value,
+                'depreciation_date': descript.depreciation_date.strftime('%Y-%m-%d'),
+                    })
+            lines.append(line)
 
-         return lines
+        return lines
 
     def create_account(self, account_brw, company):
         account_ids = con_dest.search('account.asset.asset',[('name', '=', account_brw.name),
@@ -1055,7 +1050,6 @@ class import_account_asset(object):
             return account_ids[0]
         account = {
                 'name': account_brw.name,
-                'type': account_brw.type,
                 'code': account_brw.code,
                 'purchase_value': account_brw.purchase_value,
                 'salvage_value': account_brw.salvage_value,
@@ -1064,12 +1058,12 @@ class import_account_asset(object):
                 'method_time': account_brw.method_time,
                 'method_number': account_brw.method_number,
                 'method_period': account_brw.method_period,
-                'purchase_date': account_brw.purchase_date,
+                'purchase_date': account_brw.purchase_date.strftime('%Y-%m-%d'),
                 'prorata': account_brw.prorata,
-                'description_line_ids': self.get_description(account_brw.description_line_ids),
+                'depreciation_line_ids': self.get_description(account_brw.depreciation_line_ids),
                 'category_id': self.get_category(account_brw.category_id, company),
-                'partner_id': self.get_partner_id(account_brw.partner_id, company.id),
-                'currency_id': self.get_currency_id(account_brw.currency_id, company.id),
+                'partner_id': self.get_partner_id(account_brw.partner_id, company),
+                'currency_id': self.get_currency_id(account_brw.currency_id, company),
                 'parent_id': account_brw.parent_id and \
                                                 self.create_account(account_brw.parent_id,
                                                                     company) or False,
@@ -1078,19 +1072,22 @@ class import_account_asset(object):
                 }
 
         print 'Creating acccount %s' % account_brw.name
-        account_id = con_dest.create('account.account', account)
+        print account
+        account_id = con_dest.create('account.asset.asset', account)
         return account_id
 
     def main(self):
-        company_id = con_orig.search('res.company', ['name','=', 'No me importa'])
+        company_id = con_orig.search('res.company', [('name', '=', 'Bioderpac')])
         company_id = company_id and company_id[0]
-        company_dest = con_dest.search('res.company', [('country_id.code', '=', 'VE')])
+        company_dest = con_dest.search('res.company', [('name', '=', 'Bioderpac')])
         if company_id and company_dest:
             company_dest = con_dest.browse('res.company', company_dest[0])
             account_ids = con_orig.search('account.asset.asset', [('company_id', '=', company_id)])
-            for account in con_orig.browse('accountasset.asset', account_ids):
+            for account in con_orig.browse('account.asset.asset', account_ids):
                 self.create_account(account, company_dest)
 
 
 
 
+asset = import_tax()
+asset.main()
