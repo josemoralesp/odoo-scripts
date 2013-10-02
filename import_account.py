@@ -1,10 +1,10 @@
 import oerplib
 
-HOST='localhost'
-PORT=38069
+HOST=''
+PORT=
 DB=''
 USER=''
-PASS='1234'
+PASS=''
 
 con_dest = oerplib.OERP(
 server=HOST, 
@@ -14,18 +14,18 @@ port=PORT,
 
 con_dest.login(USER, PASS)
 
-HOST='localhost'
-PORT=38069
+HOST=''
+PORT=
 DB=''
 USER=''
-PASS='1234'
+PASS=''
 
 con_orig = oerplib.OERP(
 server=HOST, 
 database=DB, 
 port=PORT, 
 )  
-
+print con_orig.db.list()
 con_orig.login(USER, PASS)
 
 class import_accountV6(object):
@@ -1088,11 +1088,308 @@ class import_account_asset(object):
 
 
 
-asset = import_journal()
+class import_hr_employee(object):
+    def get_account(self, account_brw, company):
+        if account_brw:
+            account_ids = con_dest.search('account.account',[('name', '=', account_brw.name),
+                                                             ('code', '=', account_brw.code),
+                                                             ('company_id', '=', company.id)])
+            return account_ids and account_ids[0]
+
+        return False
+
+    def get_journal(self, journal_brw, company):
+        if journal_brw:
+            journal_ids = con_dest.search('account.journal',[('name', '=', journal_brw.name),
+                                                             ('code', '=', journal_brw.code),
+                                                             ('company_id', '=', company.id)])
+            return journal_ids and journal_ids[0]
+
+        return False
+
+    def get_department_id(self, department, company):
+        if department:
+            department_ids = con_dest.search('hr.department',[('name', '=', department.name),
+                                                              ('company_id', '=', company.id)])
+            if department_ids:
+                return department_ids[0]
+            else:
+                department = {
+                        'name': department.name,
+                        'parent_id': self.get_department_id(department.parent_id, company),
+                        #'analytic_account_id': self.get_analytic(department.analytic_account_id, company),
+                        'manager_id': department.manager_id and self.create_hr(department.manager_id, company),
+                        'company_id': company.id,
+                        }
+
+                department_id = con_dest.create('hr.department', department)
+
+                return department_id
+
+    def get_job_id(self, job, company):
+        if job:
+            job_ids = con_dest.search('hr.job',[('name', '=', job.name)])
+            if job_ids:
+                return job_ids[0]
+            else:
+                job = {
+                        'name': job.name,
+                        'description': job.description,
+                        'department_id': self.get_department_id(job.department_id, company),
+                        }
+
+                job_id = con_dest.create('hr.job', job)
+
+                return job_id
+
+    def get_code(self, code, company):
+        account_ids = con_dest.search('account.account',[('code', '=', code),
+                                                         ('company_id', '=', company)])
+        if account_ids:
+            new_code = '%s-%s' %(code, 'R')
+            return self.get_code(new_code, company)
+
+        else:
+            return code
+
+    def get_partner_id(self, partner_brw, company):
+        if partner_brw:
+            partner_ids = con_dest.search('res.partner',[('name', '=', partner_brw.name),
+                                                         ('vat', '=', partner_brw.vat),
+                                                         ('company_id', '=', company.id)])
+            return partner_ids and partner_ids[0]
+
+        return False
+
+    def get_analytic(self, analytic, company):
+        if analytic:
+            analytic_ids = con_dest.search('account.analytic.account',
+                                          [('name', '=', analytic.name),
+                                           ('code', '=', analytic.code),
+                                           ('type', '=', analytic.type),
+                                           ('company_id', '=', company.id)])
+            return analytic_ids and analytic_ids[0]
+
+        return False
+
+    def get_user_id(self, user_brw, company):
+        if user_brw:
+            user_ids = con_dest.search('res.users',[('name', '=', user_brw.name),
+                                                   ('login', '=', user_brw.login)])
+            return user_ids and user_ids[0]
+
+        return False
+
+    def get_description(self, description):
+        lines = []
+        for descript in description:
+            line = (0, 0, {
+                'name': descript.name,
+                'sequence': descript.sequence,
+                'amount': descript.amount,
+                'move_check': descript.move_check,
+                'remaining_value': descript.remaining_value,
+                'depreciated_value': descript.depreciated_value,
+                'depreciation_date': descript.depreciation_date.strftime('%Y-%m-%d'),
+                    })
+            lines.append(line)
+
+        return lines
+
+    def create_hr(self, hr_brw, company):
+        hr_ids = con_dest.search('hr.employee',[('name', '=', hr_brw.name),
+                                                ('work_email', '=', hr_brw.work_email),
+                                                ('company_id', '=', company.id)])
+        if hr_ids:
+            return hr_ids[0]
+        hr = {
+                'name': hr_brw.name,
+                'company_id': company.id, 
+                'work_email': hr_brw.work_email,
+                'work_phone': hr_brw.work_phone,
+                'work_location': hr_brw.work_location,
+                'mobile_phone': hr_brw.mobile_phone,
+                'visibility': hr_brw.visibility,
+                'address_id': self.get_partner_id(hr_brw.address_id, company),
+                #'account_analytic_id': self.get_analytic(hr_brw.account_analytic_id, company),
+                'user_id': self.get_user_id(hr_brw.user_id, company),
+                'department_id': self.get_department_id(hr_brw.department_id, company),
+                'parent_id': hr_brw.parent_id and \
+                                                self.create_hr(hr_brw.parent_id, company) or False,
+                'coach_id': hr_brw.coach_id and self.create_hr(hr_brw.coach_id, company) or False,
+
+                }
+
+        print 'Creating Employee %s' % hr_brw.name
+        hr_id = con_dest.create('hr.employee', hr)
+        return hr_id
+
+    def main(self):
+        company_id = con_orig.search('res.company', [('name', '=', 'Bioderpac')])
+        company_id = company_id and company_id[0]
+        company_dest = con_dest.search('res.company', [('name', '=', 'Bioderpac')])
+        if company_id and company_dest:
+            company_dest = con_dest.browse('res.company', company_dest[0])
+            hr_ids = con_orig.search('hr.employee', [('company_id', '=', company_id)])
+            print 'hr_ids',hr_ids
+            for hrs in hr_ids:
+                hr = con_orig.browse('hr.employee', hrs)
+                print 'otro'
+                self.create_hr(hr, company_dest)
+
+
+
+class import_lots(object):
+    def get_account(self, account_brw, company):
+        if account_brw:
+            account_ids = con_dest.search('account.account',[('name', '=', account_brw.name),
+                                                             ('code', '=', account_brw.code),
+                                                             ('company_id', '=', company.id)])
+            return account_ids and account_ids[0]
+
+        return False
+
+    def get_journal(self, journal_brw, company):
+        if journal_brw:
+            journal_ids = con_dest.search('account.journal',[('name', '=', journal_brw.name),
+                                                             ('code', '=', journal_brw.code),
+                                                             ('company_id', '=', company.id)])
+            return journal_ids and journal_ids[0]
+
+        return False
+
+    def get_department_id(self, department, company):
+        if department:
+            department_ids = con_dest.search('hr.department',[('name', '=', department.name),
+                                                              ('company_id', '=', company.id)])
+            if department_ids:
+                return department_ids[0]
+            else:
+                department = {
+                        'name': department.name,
+                        'parent_id': self.get_department_id(department.parent_id, company),
+                        #'analytic_account_id': self.get_analytic(department.analytic_account_id, company),
+                        'manager_id': department.manager_id and self.create_lot(department.manager_id, company),
+                        'company_id': company.id,
+                        }
+
+                department_id = con_dest.create('hr.department', department)
+
+                return department_id
+
+    def get_job_id(self, job, company):
+        if job:
+            job_ids = con_dest.search('hr.job',[('name', '=', job.name)])
+            if job_ids:
+                return job_ids[0]
+            else:
+                job = {
+                        'name': job.name,
+                        'description': job.description,
+                        'department_id': self.get_department_id(job.department_id, company),
+                        }
+
+                job_id = con_dest.create('hr.job', job)
+
+                return job_id
+
+    def get_code(self, code, company):
+        account_ids = con_dest.search('account.account',[('code', '=', code),
+                                                         ('company_id', '=', company)])
+        if account_ids:
+            new_code = '%s-%s' %(code, 'R')
+            return self.get_code(new_code, company)
+
+        else:
+            return code
+
+    def get_partner_id(self, partner_brw, company):
+        if partner_brw:
+            partner_ids = con_dest.search('res.partner',[('name', '=', partner_brw.name),
+                                                         ('vat', '=', partner_brw.vat),
+                                                         ('company_id', '=', company.id)])
+            return partner_ids and partner_ids[0]
+
+        return False
+
+    def get_analytic(self, analytic, company):
+        if analytic:
+            analytic_ids = con_dest.search('account.analytic.account',
+                                          [('name', '=', analytic.name),
+                                           ('code', '=', analytic.code),
+                                           ('type', '=', analytic.type),
+                                           ('company_id', '=', company.id)])
+            return analytic_ids and analytic_ids[0]
+
+        return False
+
+    def get_user_id(self, user_brw, company):
+        if user_brw:
+            user_ids = con_dest.search('res.users',[('name', '=', user_brw.name),
+                                                   ('login', '=', user_brw.login)])
+            return user_ids and user_ids[0]
+
+        return False
+
+    def get_product_id(self, product_brw, company):
+        if product_brw:
+            product_ids = con_dest.search('product.product',[('name', '=', product_brw.name),
+                                                             ('default_code', '=', product_brw.default_code),
+                                                             ('company_id', '=', company.id)])
+            return product_ids and product_ids[0]
+
+        return False
+
+    def get_description(self, description):
+        lines = []
+        for descript in description:
+            line = (0, 0, {
+                'name': descript.name,
+                'sequence': descript.sequence,
+                'amount': descript.amount,
+                'move_check': descript.move_check,
+                'remaining_value': descript.remaining_value,
+                'depreciated_value': descript.depreciated_value,
+                'depreciation_date': descript.depreciation_date.strftime('%Y-%m-%d'),
+                    })
+            lines.append(line)
+
+        return lines
+
+    def create_lot(self, lot_brw, company):
+        lot_ids = con_dest.search('stock.production.lot',
+                                  [('name', '=', lot_brw.name),
+                                   ('product_id', '=', lot_brw.product_id.id),
+                                   ('company_id', '=', company.id)])
+        if lot_ids:
+            return lot_ids[0]
+        lot = {
+                'name': lot_brw.name,
+                'company_id': company.id, 
+                'product_id': self.get_product_id(lot_brw.product_id, company),
+                'prefix': lot_brw.prefix,
+                'ref': lot_brw.ref,
+                'date': lot_brw.date.strftime('%Y-%m-%d'),
+                }
+
+        print 'Creating Lot %s' % lot_brw.name
+        lot_id = con_dest.create('stock.production.lot', lot)
+        return lot_id
+
+    def main(self):
+        company_id = con_orig.search('res.company', [('name', '=', 'Bioderpac')])
+        company_id = company_id and company_id[0]
+        company_dest = con_dest.search('res.company', [('name', '=', 'Bioderpac')])
+        if company_id and company_dest:
+            company_dest = con_dest.browse('res.company', company_dest[0])
+            lot_ids = con_orig.search('stock.production.lot', [('company_id', '=', company_id)])
+            print 'lot_ids',lot_ids
+            for lot in con_orig.browse('stock.production.lot', lot_ids):
+                self.create_lot(lot, company_dest)
+
+
+
+asset = import_lots()
 asset.main()
-asset = import_tax()
-asset.main()
-asset = import_uom()
-asset.main()
-asset = import_product()
+asset = import_hr_employee()
 asset.main()
