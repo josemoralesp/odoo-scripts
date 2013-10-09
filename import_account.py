@@ -1,10 +1,10 @@
 import oerplib
 
-HOST=''
-PORT=
-DB=''
-USER=''
-PASS=''
+HOST='localhost'
+PORT=8069
+DB='bioderpac'
+USER='admin_bioderpac'
+PASS='1234'
 
 con_dest = oerplib.OERP(
 server=HOST, 
@@ -14,11 +14,12 @@ port=PORT,
 
 con_dest.login(USER, PASS)
 
-HOST=''
-PORT=
-DB=''
-USER=''
-PASS=''
+#HOST='rpc.bioderpac.openerp.la'
+HOST='localhost'
+PORT=4444
+DB='carga_datos_lotes_test'
+USER='admin_bioderpac'
+PASS='1234'
 
 con_orig = oerplib.OERP(
 server=HOST, 
