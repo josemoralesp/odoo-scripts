@@ -1,32 +1,47 @@
 import oerplib
 
 HOST='localhost'
+<<<<<<< TREE
 PORT=8069
 DB='bioderpac'
 USER='admin_bioderpac'
 PASS='1234'
+=======
+PORT=4545
+DB=''
+USER=''
+PASS=''
+>>>>>>> MERGE-SOURCE
 
 con_dest = oerplib.OERP(
 server=HOST, 
 database=DB, 
 port=PORT, 
 )  
-
 con_dest.login(USER, PASS)
 
+<<<<<<< TREE
 #HOST='rpc.bioderpac.openerp.la'
+=======
+>>>>>>> MERGE-SOURCE
 HOST='localhost'
+<<<<<<< TREE
 PORT=4444
 DB='carga_datos_lotes_test'
 USER='admin_bioderpac'
 PASS='1234'
+=======
+PORT=8069
+DB=''
+USER=''
+PASS=''
+>>>>>>> MERGE-SOURCE
 
 con_orig = oerplib.OERP(
 server=HOST, 
 database=DB, 
 port=PORT, 
 )  
-print con_orig.db.list()
 con_orig.login(USER, PASS)
 
 class import_accountV6(object):
@@ -1153,7 +1168,7 @@ class import_hr_employee(object):
         else:
             return code
 
-    def get_partner_id(self, partner_brw, company):
+    def get_partner(self, partner_brw, company):
         if partner_brw:
             partner_ids = con_dest.search('res.partner',[('name', '=', partner_brw.name),
                                                          ('vat', '=', partner_brw.vat),
@@ -1203,6 +1218,12 @@ class import_hr_employee(object):
                                                 ('company_id', '=', company.id)])
         if hr_ids:
             return hr_ids[0]
+	if hr_brw.parent_id:
+	    if (hr_brw.name == hr_brw.parent_id.name) and (hr_brw.work_email == hr_brw.parent_id.work_email):
+	        return False
+	if hr_brw.coach_id:
+	    if (hr_brw.name == hr_brw.coach_id.name) and (hr_brw.work_email == hr_brw.coach_id.work_email):
+	        return False
         hr = {
                 'name': hr_brw.name,
                 'company_id': company.id, 
@@ -1211,7 +1232,7 @@ class import_hr_employee(object):
                 'work_location': hr_brw.work_location,
                 'mobile_phone': hr_brw.mobile_phone,
                 'visibility': hr_brw.visibility,
-                'address_id': self.get_partner_id(hr_brw.address_id, company),
+                'address_id': self.get_partner(hr_brw.address_id, company),
                 #'account_analytic_id': self.get_analytic(hr_brw.account_analytic_id, company),
                 'user_id': self.get_user_id(hr_brw.user_id, company),
                 'department_id': self.get_department_id(hr_brw.department_id, company),
@@ -1232,10 +1253,8 @@ class import_hr_employee(object):
         if company_id and company_dest:
             company_dest = con_dest.browse('res.company', company_dest[0])
             hr_ids = con_orig.search('hr.employee', [('company_id', '=', company_id)])
-            print 'hr_ids',hr_ids
             for hrs in hr_ids:
                 hr = con_orig.browse('hr.employee', hrs)
-                print 'otro'
                 self.create_hr(hr, company_dest)
 
 
@@ -1390,7 +1409,5 @@ class import_lots(object):
 
 
 
-asset = import_lots()
-asset.main()
 asset = import_hr_employee()
 asset.main()
