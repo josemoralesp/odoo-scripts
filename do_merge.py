@@ -5,8 +5,8 @@ import psycopg2
 
 HOST=raw_input('Please insert the server host: ')
 DBHOST=raw_input('Please insert the data base host: ')
-PORT=raw_input('Please insert the server port: ')
-DBPORT=raw_input('Please insert the database port: ')
+PORT=int(raw_input('Please insert the server port: '))
+DBPORT=int(raw_input('Please insert the database port: '))
 DB=raw_input('Please insert the database name: ')
 USER=raw_input('Please insert the server user: ')
 PASS=raw_input('Please insert the password for server user: ')
@@ -55,7 +55,8 @@ def do_merge():
                        FROM res_partner 
                        WHERE id NOT IN (SELECT id 
                                         FROM res_partner 
-                                        WHERE vat ILIKE 'MXXAXX010101000' OR vat ILIKE '') 
+                                        WHERE vat IN ('MXXAXX010101000','MXXEXX010101000') 
+                                              OR vat ILIKE '') 
                        GROUP BY vat HAVING COUNT(*) >= 2
                        ORDER BY min(id)""")
 
