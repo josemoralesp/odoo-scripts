@@ -45,7 +45,7 @@ def check_partner():
 
 def do_merge():
 
-    merge_obj = con.get('base.partner.merge.automatic.wizard')
+    merge_obj = con.get('wizard.merge.partner.by.partner')
 #    base_id = merge_obj.create(cr, uid, {'group_by_email':True})              
 #    result = merge_obj.start_process_cb(cr, uid, [base_id])
 #    base_id = merge_obj.browse(cr, uid, result.get('res_id'))               
@@ -61,12 +61,13 @@ def do_merge():
                        ORDER BY min(id)""")
 
         for min_id, aggr_ids in cur.fetchall():
-            partner_obj = con.get('res.partner')
             if len(aggr_ids) < 10:
+                merge_id =  merge_obj.create({'partner_id':min_id,
+                                              'partner_ids': [(6, 0, aggr_ids)]})
                 try:
                     print aggr_ids
-                    merge_obj.merge_pbp(aggr_ids, False)
-                except:
-                    print 'Algo'
+                    merge_obj.merge_cb([merge_id])
+                except Exception, e:
+                    print 'Algo',e 
     return True
 do_merge()
