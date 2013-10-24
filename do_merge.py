@@ -56,13 +56,13 @@ def do_merge():
                        WHERE id NOT IN (SELECT id 
                                         FROM res_partner 
                                         WHERE vat IN ('MXXAXX010101000','MXXEXX010101000') 
-                                              OR vat ILIKE '') 
+                                              OR vat ILIKE '') AND adminpaq_id > 0 
                        GROUP BY vat HAVING COUNT(*) >= 2
                        ORDER BY min(id)""")
 
         for min_id, aggr_ids in cur.fetchall():
             if len(aggr_ids) < 10:
-                merge_id =  merge_obj.create({'partner_id':min_id,
+                merge_id =  merge_obj.create({'partner_id': min_id,
                                               'partner_ids': [(6, 0, aggr_ids)]})
                 try:
                     print aggr_ids
