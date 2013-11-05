@@ -43,22 +43,21 @@ def check_partner():
     return True
 
 
-def do_merge():
+def do_merge(merge_to='name'):
 
     merge_obj = con.get('wizard.merge.partner.by.partner')
-#    base_id = merge_obj.create(cr, uid, {'group_by_email':True})              
-#    result = merge_obj.start_process_cb(cr, uid, [base_id])
-#    base_id = merge_obj.browse(cr, uid, result.get('res_id'))               
-#    state = base_id.state
     if cur:
+        vat_cond = """ id NOT IN (SELECT id 
+                                  FROM res_partner 
+                                  WHERE vat IN ('MXXAXX010101000','MXXEXX010101000') 
+                                        OR vat ILIKE '') AND """
+
         cur.execute("""SELECT min(id), array_agg(id)
                        FROM res_partner 
-                       WHERE id NOT IN (SELECT id 
-                                        FROM res_partner 
-                                        WHERE vat IN ('MXXAXX010101000','MXXEXX010101000') 
-                                              OR vat ILIKE '') AND adminpaq_id > 0 
-                       GROUP BY vat HAVING COUNT(*) >= 2
-                       ORDER BY min(id)""")
+                       WHERE %s adminpaq_id > 0 
+                       GROUP BY %s HAVING COUNT(*) >= 2
+                       ORDER BY min(id)""" % (merge_to == 'vat' and vat_cond or 'active=True AND',
+                                              merge_to))
 
         for min_id, aggr_ids in cur.fetchall():
             if len(aggr_ids) < 10:
