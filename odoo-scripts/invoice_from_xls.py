@@ -25,7 +25,7 @@ conec = oerplib.OERP(
             server=HOST,
             database=DB,
             port=PORT,
-            )  
+            )
 
 conec.login(USER,PASS)
 
@@ -43,7 +43,7 @@ def get_journal(cone2,name):
     if name:
         journal = cone2.search('account.journal',[('name','=',name)])
         journal = journal and journal[0]
-        
+
     return journal
 
 def create_account_move(xls):
@@ -61,7 +61,7 @@ def create_account_move(xls):
         line = []
         rang = range(sheet.nrows)
         for ind in rang:
-            
+
             value = sheet.row_values(ind)
             period = conec.execute('account.period','find',value[0],{'company_id':company_id})
             date = '%s-1'%value[0][:7]
@@ -70,7 +70,7 @@ def create_account_move(xls):
                 invoice_id and invoice_id.update({'invoice_line':line})
                 #print 'period',period
                 #print '%s-1'%value[0][:7]
-            
+
             elif date > date_invoice or date_invoice == False:
                 if invoice_id:
                     invo = conec.create('account.invoice',invoice_id)
@@ -78,8 +78,8 @@ def create_account_move(xls):
                     line = []
                     invoice_id = False
                     date_invoice = False
-                
-                
+
+
                 values = conec.execute('account.invoice','onchange_partner_id','', 'in_invoice', 13)
                 values and values.get('value').update({'partner_id':13,
                                                     'company_id':company_id ,
@@ -89,18 +89,18 @@ def create_account_move(xls):
                                                     'type':'in_invoice',
                                                     'journal_id':get_journal(conec,'Compra de Producto'),
                                                     })
-                                                    
+
                 invoice_id = values and values.get('value')
                 date_invoice = date
-                
-                
+
+
             elif ind == rang[-1]:
                 invo = conec.create('account.invoice',invoice_id)
                 cone1.exec_workflow('account.invoice','invoice_open',invo)
                 line = []
                 invoice_id = False
-                date_invoice = False 
-                
+                date_invoice = False
+
 
 
 

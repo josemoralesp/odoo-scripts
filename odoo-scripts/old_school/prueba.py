@@ -32,7 +32,7 @@ os.popen('touch error_de_partner_suppliers.csv')
 os.popen('touch product_error.csv')
 ### login to server
 uid = common_proxy.login(DB,USER,PASS)
-               
+
 address_id = object_proxy.execute(DB, uid, PASS,'fiscal.requirements.config','create',{ 'vat':'123456789',
         'name':'Casa',
         'add':'cosa',
@@ -45,9 +45,9 @@ partner = object_proxy.execute(DB, uid, PASS,'fiscal.requirements.config','read'
 print "partner",partner
 
 if __name__ == '__main__':
-   
+
     print "hola"
-   
+
     print 'Hemos terminado con exito'
 
 

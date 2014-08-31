@@ -3,17 +3,17 @@ import oerplib
 import os
 import sys
 
-HOST='localhost'
-PORT=28069
-DB='ovl_prueba'
-USER='admin'
-PASS='admin'
+HOST=
+PORT=
+DB=
+USER=
+PASS=
 
 con = oerplib.OERP(
-server=HOST, 
-database=DB, 
-port=PORT, 
-)  
+server=HOST,
+database=DB,
+port=PORT,
+)
 
 con.login(USER, PASS)
 ids = []
