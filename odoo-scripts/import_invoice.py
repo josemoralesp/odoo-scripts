@@ -24,6 +24,11 @@ def get_destiny_id(destiny, origin, re_id, model, company_id):
         user_id = destiny.search(model,
                                  [('login', '=', user.get('login'))])
         return user_id and user_id[0]
+    if model == 'account.payment.term':
+        term = origin.read(model, re_id, ['name'])
+        term_id = destiny.search(model,
+                                 [('name', '=', term.get('name'))])
+        return term_id and term_id[0]
     if model == 'account.tax.code':
         code = origin.read(model, re_id, ['name'])
         code_id = destiny.search(model,
@@ -109,7 +114,9 @@ def get_journal(destiny, origin, journal_id, company_id):
                               'default_debit_account_id'],
                              {}, '_classic_write')
     journal_id = destiny.search('account.journal',
-                                [('code', '=', journal.get('code')),
+                                ['|',
+                                 ('code', '=', journal.get('code')),
+                                 ('name', '=', journal.get('name')),
                                  ('company_id', '=', company_id)])
     if journal_id:
         return journal_id[0]
@@ -164,23 +171,21 @@ def get_reconcile(destiny, origin, reconcile_id, move, prefix, year, company_id)
     dest_id = get_id_from_ir_data(destiny, prefix, 'account_move_reconcile', reconcile_id)
     if dest_id:
         return dest_id
-    reco_id = destiny.search('account.move.reconcile',
-                             [('name', '=', reco_read.get('name'))])
-    if not reco_id:
-        reco_read.pop('id', 'no')
-        reco_id = destiny.create('account.move.reconcile',
-                                 reco_read)
-        destiny.create('ir.model.data',
-                    {'name': '{pre}_{model},{mid}'. format(pre=prefix, model='account_move_reconcile', mid=reconcile_id),
-                        'res_id': reco_id,
-                        'model': 'account.move.reconcile'})
-        move_ids = origin.search('account.move',
-                                 ['|',
-                                  ('line_id.reconcile_partial_id', '=',
-                                   reconcile_id),
-                                  ('line_id.reconcile_id', '=', reconcile_id)])
-        for m_id in move_ids:
-            create_acc_move(destiny, origin, prefix, m_id, year, company_id)
+    reco_read.pop('id', 'no')
+    reco_id = destiny.create('account.move.reconcile',
+                                reco_read)
+
+    destiny.create('ir.model.data',
+                {'name': '{pre}_{model},{mid}'. format(pre=prefix, model='account_move_reconcile', mid=reconcile_id),
+                    'res_id': reco_id,
+                    'model': 'account.move.reconcile'})
+    move_ids = origin.search('account.move',
+                                ['|',
+                                ('line_id.reconcile_partial_id', '=',
+                                reconcile_id),
+                                ('line_id.reconcile_id', '=', reconcile_id)])
+    for m_id in move_ids:
+        create_acc_move(destiny, origin, prefix, m_id, year, company_id)
 
     return reco_id
 
@@ -212,7 +217,7 @@ def prepare_move_lines(destiny, origin, prefix, line_ids, move_id, company_id, y
             'analytic_lines': [],
             'move_id': move_id,
             'reconcile_partial_id': get_reconcile(destiny, origin, line_read.get('reconcile_partial_id'), line_read.get('move_id'), prefix, year, company_id),
-            'reconcile_id': get_reconcile(destiny, origin, line_read.get('reconcile_partial_id'), line_read.get('move_id'), prefix, year, company_id),
+            'reconcile_id': get_reconcile(destiny, origin, line_read.get('reconcile_id'), line_read.get('move_id'), prefix, year, company_id),
             'analytic_account_id': get_destiny_id(destiny, origin,
                                                   line_read.get('analytic_account_id'),
                                                   'account.analytic.account',
@@ -244,6 +249,8 @@ def prepare_move_lines(destiny, origin, prefix, line_ids, move_id, company_id, y
             'company_id': company_id,
         })
         old_id = line_read.pop('id', 'no')
+        if line_read.get('currency_id') == 193:
+            line_read.pop('currency_id')
         line_read.pop('invoice', 'no')
         line_id = destiny.create('account.move.line', line_read)
         destiny.create('ir.model.data',
@@ -353,7 +360,7 @@ def import_invoices(year, cd, co, po, dbo, uo, pre, poo, pod, pd, dbd, ud):
     destiny.login(user=ud, passwd=pd, database=dbd)
     invoice_ids = origin.search('account.invoice',
                                 [('company_id', '=', co),
-                                 ('period_id.code', 'ilike', '%/' + '%s' % year)])
+                                 ('period_id.fiscalyear_id.name', '=', year)])
 
     fields = ['origin', 'comment', 'date_due', 'check_total', 'reference',
               'payment_term', 'number', 'company_id', 'currency_id',
@@ -381,6 +388,7 @@ def import_invoices(year, cd, co, po, dbo, uo, pre, poo, pod, pd, dbd, ud):
             'journal_id': get_journal(destiny, origin, invo_read.get('journal_id'), cd),
             'user_id': get_destiny_id(destiny, origin, invo_read.get('user_id'), 'res.users', cd),
             'fiscal_position': get_destiny_id(destiny, origin, invo_read.get('fiscal_position'), 'account.fiscal.position', cd),
+            'payment_term': get_destiny_id(destiny, origin, invo_read.get('payment_term'), 'account.payment.term', cd),
             'partner_bank_id': get_destiny_id(destiny, origin, invo_read.get('partner_bank_id'), 'res.partner.bank', cd),
             'period_id': get_destiny_id(destiny, origin, invo_read.get('period_id'), 'account.period', cd),
             'pay_method_id': get_destiny_id(destiny, origin, invo_read.get('pay_method'), 'pay.method', cd),
@@ -392,9 +400,12 @@ def import_invoices(year, cd, co, po, dbo, uo, pre, poo, pod, pd, dbd, ud):
         })
         inv_id = destiny.search('account.invoice',
                                 [('internal_number', '=',
-                                  invo_read.get('internal_number'))])
+                                  invo_read.get('internal_number')),
+                                 ('company_id', '=', cd),
+                                 ('type', '=', invo_read.get('type'))])
         if not inv_id:
             inv_id = destiny.create('account.invoice', invo_read)
+            click.echo('Created the invoice %s ' % invo_read.get('name'))
 
 if __name__ == '__main__':
     import_invoices()
