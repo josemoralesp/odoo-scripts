@@ -146,6 +146,7 @@ def prepare_order_lines(destiny, origin, prefix, line_ids, company_id):
                                    {}, '_classic_write')
         line_read.update({
             'uos_id': get_destiny_id(destiny, origin, line_read.get('uos_id'), 'product.uom', company_id),
+            'company_id': company_id,
             'partner_id': get_partner(destiny, origin, line_read.get('partner_id'), company_id),
             'account_id': get_account(destiny, origin, line_read.get('account_id'), company_id),
             'analytics_id': get_destiny_id(destiny, origin, line_read.get('analytics_id'), 'account.analytic.account', company_id),
@@ -340,7 +341,29 @@ def get_currency(destiny, origin, currency, company_id):
 
 
 @click.command()
-@click.option('-pre', default='from6-5to7-4', prompt='Prefix to ir_model_data',
+@click.option('-year', default='2012',
+              prompt='Year', help='Year')
+@click.option('-cd', default=4,
+              prompt='Company ID destiny', help='Company id from destiny')
+@click.option('-co', default=5,
+              prompt='Company ID Origin', help='Company id from origin')
+@click.option('-pod', default=7000,
+              prompt='Port Destiny', help='Port of server Destiny')
+@click.option('-pd', default='',
+              prompt='Password Destiny', help='Password Destiny')
+@click.option('-dbd', default='',
+              prompt='Database Destiny', help='DB Destiny')
+@click.option('-ud', default='',
+              prompt='User name Destiny', help='your email or login')
+@click.option('-poo', default='',
+              prompt='Port Origin', help='Port of origin of data')
+@click.option('-po', default='',
+              prompt='Password Origin', help='Password Origin')
+@click.option('-dbo', default='',
+              prompt='Database Origin', help='DB Origin')
+@click.option('-uo', default='',
+              prompt='User name Origin', help='your email or login')
+@click.option('-pre', default='', prompt='Prefix to ir_model_data',
               help='Prefix used to id of records imported e.g '
               'prefix_product_product,id')
 def import_invoices(year, cd, co, po, dbo, uo, pre, poo, pod, pd, dbd, ud):
@@ -351,10 +374,11 @@ def import_invoices(year, cd, co, po, dbo, uo, pre, poo, pod, pd, dbd, ud):
 
     you still need to modify the IP, Protocol, and Portparameters.
     '''
-    origin = oerplib.OERP(server='erp60.vauxoo.com',
+    origin = oerplib.OERP(server='',
                           port=poo,
                           timeout=9999999999999999)
-    destiny = oerplib.OERP(server='gure.vauxoo.com',
+    # destiny = oerplib.OERP(server='',
+    destiny = oerplib.OERP(server='www.vauxoo.com',
                            port=pod)
     origin.login(user=uo, passwd=po, database=dbo)
     destiny.login(user=ud, passwd=pd, database=dbd)
