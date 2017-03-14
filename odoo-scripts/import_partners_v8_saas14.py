@@ -111,7 +111,7 @@ def import_partners(cd, co, po, dbo, uo, poo, pod, pd, dbd, ud):
         partner_ids = partner_ids[:nrecords]
     click.echo("Partners to create " + str(len(partner_ids)))
     partner_data = origin.execute(
-        'res.partner', 'export_data', partner_ids[0:30], export_fields)
+        'res.partner', 'export_data', partner_ids, export_fields)
     for (item, partner) in enumerate(partner_data.get('datas', []), 1):
         change_values(import_fields, partner, 'company_id/id', False)
         change_values(import_fields, partner, 'website_published', False)
@@ -124,18 +124,22 @@ def import_partners(cd, co, po, dbo, uo, poo, pod, pd, dbd, ud):
         change_values(import_fields, partner, 'company_type',
                       'Company' if is_company else 'Individual')
         dtype = get_values(import_fields, partner, 'type')
-        if dtype == 'default':
-            change_values(import_fields, partner, 'type', 'Contact')
+        change_values(import_fields, partner, 'type', 'Contact')
         if dtype == u'Invoice':
             change_values(import_fields, partner, 'type', 'Invoice address')
         lang = get_values(import_fields, partner, 'lang')
         if lang in ['es_MX', 'es_VE', 'es_PA']:
-            change_values(import_fields, partner, 'lang', u'Spanish / Espa\xf1ol')
+            change_values(import_fields, partner,
+                          'lang', u'Spanish / Espa\xf1ol')
         vat = get_values(import_fields, partner, 'vat')
         if vat and vat in ['ec', 'es', 'mx', 'pe', 've']:
             change_values(import_fields, partner, 'vat', vat[:2])
         result = destiny.execute(
             'res.partner', 'load', import_fields, [partner])
+        if result.get('messages'):
+            click.echo(
+                'Error imported partner because %s' %
+                result.get('messages', {}).get('message'))
 
 if __name__ == '__main__':
     import_partners()
