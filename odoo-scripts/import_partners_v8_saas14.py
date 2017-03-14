@@ -138,7 +138,7 @@ def import_partners(cd, co, po, dbo, uo, poo, pod, pd, dbd, ud):
             'res.partner', 'load', import_fields, [partner])
         if result.get('messages'):
             click.echo(
-                'Error imported partner because %s' %
+                'Error importing partner because %s' %
                 result.get('messages', {}).get('message'))
 
 if __name__ == '__main__':
