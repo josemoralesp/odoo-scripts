@@ -77,7 +77,6 @@ class SaleTest():
             lambda driver: driver.find_element_by_xpath(price))
         price.clear()
         price.send_keys('150')
-        time.sleep(2)
 
         self.click_outside()
 
@@ -86,12 +85,11 @@ class SaleTest():
         savebutton = WebDriverWait(driver, 10).until(
             lambda driver: driver.find_element_by_xpath(savebutton))
         savebutton.click()
-        time.sleep(1)
 
-        # buttonconfirm = "(//button[contains(span, 'Confirm Sale')])[1]"
-        # buttonconfirm = WebDriverWait(driver, 10).until(
-        #     lambda driver: driver.find_element_by_xpath(buttonconfirm))
-        # buttonconfirm.click()
+        buttonconfirm = "(//button[contains(span, 'Confirm Sale')])[1]"
+        buttonconfirm = WebDriverWait(driver, 10).until(
+            lambda driver: driver.find_element_by_xpath(buttonconfirm))
+        buttonconfirm.click()
 
 
 @click.command()

@@ -1,0 +1,129 @@
+1489708583815	geckodriver	INFO	Listening on 127.0.0.1:54531
+1489708584852	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.l173b4AZN04X
+1489708584852	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1489708584858	geckodriver::marionette	INFO	Connecting to Marionette on localhost:40553
+1489708585421	Marionette	INFO	Listening on port 40553
+1489708585659	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+[Child 6711] ###!!! ABORT: Aborting on channel error.: file /build/firefox-ZQQBpC/firefox-52.0+build2/ipc/glue/MessageChannel.cpp, line 2143
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+[Child 6711] ###!!! ABORT: Aborting on channel error.: file /build/firefox-ZQQBpC/firefox-52.0+build2/ipc/glue/MessageChannel.cpp, line 2143
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x3E0003,name=PCompositable::Msg_Destroy) Channel error: cannot send/recv
+
+1489708642245	geckodriver	INFO	Listening on 127.0.0.1:41763
+1489708643281	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.GcOQNujaFSqt
+1489708643282	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1489708643288	geckodriver::marionette	INFO	Connecting to Marionette on localhost:40809
+1489708643839	Marionette	INFO	Listening on port 40809
+1489708644073	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+1489708677680	geckodriver	INFO	Listening on 127.0.0.1:50839
+1489708678714	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.OAf1JWp1Acie
+1489708678714	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1489708678718	geckodriver::marionette	INFO	Connecting to Marionette on localhost:45845
+1489708679261	Marionette	INFO	Listening on port 45845
+1489708679506	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+1489708741063	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1489708755833	geckodriver	INFO	Listening on 127.0.0.1:57895
+1489708756870	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.qT9IxDMykjte
+1489708756871	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1489708756877	geckodriver::marionette	INFO	Connecting to Marionette on localhost:44329
+1489708757461	Marionette	INFO	Listening on port 44329
+1489708757722	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+1489708826271	geckodriver	INFO	Listening on 127.0.0.1:45867
+1489708827313	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.urWRf0J1sihp
+1489708827313	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1489708827319	geckodriver::marionette	INFO	Connecting to Marionette on localhost:44201
+1489708827862	Marionette	INFO	Listening on port 44201
+1489708828097	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+Handler function NetworkEventActorProxy.addSecurityInfo threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._getSecurityInfo<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:488:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype.onStartRequest@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:429:5
+Line: 1660, column: 0
+console.error: 
+  Handler function NetworkEventActorProxy.addSecurityInfo threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._getSecurityInfo<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:488:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype.onStartRequest@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:429:5
+Line: 1660, column: 0
+Handler function NetworkEventActorProxy.addResponseContent threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._onComplete@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:621:5
+NetworkResponseListener.prototype.onStreamClose@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:578:7
+NetworkResponseListener.prototype.onInputStreamReady@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:669:7
+Line: 1660, column: 0
+console.error: 
+  Handler function NetworkEventActorProxy.addResponseContent threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._onComplete@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:621:5
+NetworkResponseListener.prototype.onStreamClose@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:578:7
+NetworkResponseListener.prototype.onInputStreamReady@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:669:7
+Line: 1660, column: 0
+1489709934334	geckodriver	INFO	Listening on 127.0.0.1:60250
+1489709935370	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.JWfvzSt27cJd
+1489709935370	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1489709935376	geckodriver::marionette	INFO	Connecting to Marionette on localhost:44677
+1489709935865	Marionette	INFO	Listening on port 44677
+1489709936100	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
