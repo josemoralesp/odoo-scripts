@@ -163,7 +163,7 @@ class SaleTest():
         time.sleep(7)
         driver.execute_script(
             "$('button:contains(Done)').click()")
-        time.sleep(2)
+        time.sleep(3)
         driver.execute_script(
             "$('td.oe_list_field_cell:contains(WH/PICK)').click()")
         time.sleep(2)
@@ -179,21 +179,6 @@ class SaleTest():
         driver.execute_script(
             "$('button:contains(Pickings)').click()")
         time.sleep(3)
-        driver.execute_script(
-            "$($('.oe_list_content')[3])."
-            "find('tr :contains(Ready to Transfer)').click()")
-        time.sleep(2)
-        driver.execute_script(
-            "$('button.oe_button.oe_form_button."
-            "oe_highlight:contains(Transfer)').click()"
-            )
-        time.sleep(3)
-        driver.execute_script(
-            "$('div.modal-content button:contains(Apply)').click()")
-        time.sleep(3)
-        driver.execute_script(
-            "$('ul.oe_view_manager_switch.oe_right "
-            "li.oe_e a.oe_vm_switch_list').click()")
 
     def validate_pack(self):
         driver = self.driver
@@ -207,16 +192,53 @@ class SaleTest():
             "oe_highlight:contains(Transfer)').click()"
             )
         time.sleep(3)
+        for pack in ('0536', '0537', '0538', '0539', '0539'):
+            driver.execute_script(
+                "$('span.pack_search input').val('%s')" % pack)
+            driver.execute_script(
+                "$('span.pack_search input').focus()."
+                "trigger(jQuery.Event('keyup', { keycode: $.ui.keyCode.ENTER, "
+                "which: $.ui.keyCode.ENTER   }))")
+            time.sleep(2)
+            driver.execute_script(
+                """$('textarea[name="scan_data"]').val('3P-CECHB*2')""")
+            time.sleep(1)
+            driver.execute_script(
+                """$('textarea[name="scan_data"]').focus()."""
+                "trigger(jQuery.Event('keyup', { keycode: $.ui.keyCode.ENTER, "
+                "which: $.ui.keyCode.ENTER  }))")
+            time.sleep(1)
+            driver.execute_script(
+                "$('button:contains(Save in Cache)').click()")
+            time.sleep(2)
         driver.execute_script(
-            "$('div.modal-content button:contains(Apply)').click()")
+            "$('button:contains(Validate)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('button:contains(Ok)').click()")
+        time.sleep(6)
+
+    def validate_out(self):
+        driver = self.driver
+        time.sleep(3)
+        driver.execute_script(
+            "$('div.oe_view_manager.oe_view_manager_current"
+            "[data-view-type=list]:not([style])')."
+            "find('tr :contains(Ready to Transfer)').click()")
+        time.sleep(4)
+        # driver.execute_script(
+        #     "$('button:contains(Delivery Order)').click()")
+        # time.sleep(2)
+        driver.execute_script(
+            "location.reload()")
+        time.sleep(10)
+        driver.execute_script(
+            "$('button.oe_button.oe_form_button."
+            "oe_highlight:contains(Transfer)').click()"
+            )
         time.sleep(4)
         driver.execute_script(
-            "$('span.pack_search input').val('0536')")
-        driver.execute_script(
-            "$('span.pack_search input').focus()."
-            "trigger(jQuery.Event('keyup', { keycode: $.ui.keyCode.ENTER, "
-            "which: $.ui.keyCode.ENTER   }))")
-        time.sleep(2)
+            "$('div.modal-content button:contains(Apply)').click()")
 
 
 @click.command()
@@ -244,6 +266,7 @@ def main(server, user, password, db):
     sale.go_to_pickings()
     sale.validate_pick()
     sale.validate_pack()
+    sale.validate_out()
 
 if __name__ == '__main__':
     main()
