@@ -32,6 +32,15 @@ class SaleTest():
             lambda driver: driver.find_element_by_xpath(salemenu))
         salemenu.click()
 
+    def go_to_pickings(self):
+        driver = self.driver
+        time.sleep(9)
+        pickingmenu = "//button[contains(., 'View Delivery Order')]"
+        pickingmenu = WebDriverWait(driver, 10).until(
+            lambda driver: driver.find_element_by_xpath(pickingmenu))
+        pickingmenu.click()
+        time.sleep(3)
+
     def click_outside(self):
         fieldinput = "html"
         fieldinput = WebDriverWait(self.driver, 10).until(
@@ -90,6 +99,124 @@ class SaleTest():
         buttonconfirm = WebDriverWait(driver, 10).until(
             lambda driver: driver.find_element_by_xpath(buttonconfirm))
         buttonconfirm.click()
+        time.sleep(3)
+
+    def fill_wave(self, product_name, location, qty):
+        driver = self.driver
+        driver.execute_script(
+            "$('#filterbox').val('%s').keyup()" % product_name)
+        time.sleep(1)
+        driver.execute_script(
+            "$('td.location_f input').val('%s').keyup()" % location)
+        time.sleep(1)
+        driver.execute_script(
+            "$('td.quantity_f input').val('%s').keyup()" % qty)
+        time.sleep(1)
+        driver.execute_script(
+            "$('td.quantity_f input').trigger("
+            "{type: 'keypress', which: 13, keyCode: 13});")
+        time.sleep(2)
+
+    def validate_pick(self):
+        driver = self.driver
+        driver.execute_script(
+            "$($('.oe_list_content')[3])."
+            "find('tr :contains(Waiting Availability)').click()")
+        time.sleep(2)
+        driver.execute_script("$('li a:contains(Additional Info)').click()")
+        driver.execute_script("$('.oe_form_button_edit')[1].click()")
+        driver.execute_script(
+            "$('td.oe_form_group_cell_label:contains(Picking Wave)').next()"
+            ".find('.oe_m2o_drop_down_button').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('li.oe_m2o_dropdown_option "
+            "a:contains(Create and Edit...)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('div.modal-content button:contains(Confirm)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('div.modal-content button:contains(Save)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('span.oe_form_buttons_edit button:contains(Save)')[1].click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('a:contains(Wave/)').click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$('button:contains(Pick Products)').click()")
+        time.sleep(7)
+        self.fill_wave('Wrong Product', 'Stock', 13)
+        self.click_outside()
+        self.fill_wave('3P-CECHB', 'Stock', 13)
+        time.sleep(2)
+        self.fill_wave('3P-CECHB', 'Stock', 2)
+        self.fill_wave('3P-CECHB', 'Stock', 5)
+        self.fill_wave('3P-CECHB', 'Stock', 4)
+        self.click_outside()
+        self.fill_wave('3P-CECHB', 'Stock', 3)
+        time.sleep(2)
+        driver.execute_script(
+            "$('button:contains(Quit)').click()")
+        time.sleep(7)
+        driver.execute_script(
+            "$('button:contains(Done)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('td.oe_list_field_cell:contains(WH/PICK)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('div.modal-content li a:contains(Additional Info)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('div.modal-content a:contains(SO-)').click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$('div.modal-header button.close').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('button:contains(Pickings)').click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$($('.oe_list_content')[3])."
+            "find('tr :contains(Ready to Transfer)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('button.oe_button.oe_form_button."
+            "oe_highlight:contains(Transfer)').click()"
+            )
+        time.sleep(3)
+        driver.execute_script(
+            "$('div.modal-content button:contains(Apply)').click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$('ul.oe_view_manager_switch.oe_right "
+            "li.oe_e a.oe_vm_switch_list').click()")
+
+    def validate_pack(self):
+        driver = self.driver
+        driver.execute_script(
+            "$('div.oe_view_manager.oe_view_manager_current"
+            "[data-view-type=list]:not([style])')."
+            "find('tr :contains(Ready to Transfer)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('button.oe_button.oe_form_button."
+            "oe_highlight:contains(Transfer)').click()"
+            )
+        time.sleep(3)
+        driver.execute_script(
+            "$('div.modal-content button:contains(Apply)').click()")
+        time.sleep(4)
+        driver.execute_script(
+            "$('span.pack_search input').val('0536')")
+        driver.execute_script(
+            "$('span.pack_search input').focus()."
+            "trigger(jQuery.Event('keyup', { keycode: $.ui.keyCode.ENTER, "
+            "which: $.ui.keyCode.ENTER   }))")
+        time.sleep(2)
 
 
 @click.command()
@@ -114,6 +241,9 @@ def main(server, user, password, db):
                     password=password, db=db)
     sale.go_to_sale_form()
     sale.fill_form()
+    sale.go_to_pickings()
+    sale.validate_pick()
+    sale.validate_pack()
 
 if __name__ == '__main__':
     main()
