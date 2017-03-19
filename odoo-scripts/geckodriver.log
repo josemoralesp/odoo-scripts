@@ -1,0 +1,148 @@
+1489857380454	geckodriver	INFO	Listening on 127.0.0.1:59650
+1489857381491	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.07fGzg8QyOt8
+1489857381491	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1489857381493	geckodriver::marionette	INFO	Connecting to Marionette on localhost:33173
+1489857381965	Marionette	INFO	Listening on port 33173
+1489857382193	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1489911444679	geckodriver	INFO	Listening on 127.0.0.1:40673
+1489911445713	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.vpyyE4pqK2UA
+1489911445713	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1489911445715	geckodriver::marionette	INFO	Connecting to Marionette on localhost:38869
+1489911446194	Marionette	INFO	Listening on port 38869
+1489911446422	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+
+(firefox:11636): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion 'targets != NULL' failed
+1489911785811	geckodriver	INFO	Listening on 127.0.0.1:54664
+1489911786867	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.5W20cVpmGHf1
+1489911786868	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1489911786870	geckodriver::marionette	INFO	Connecting to Marionette on localhost:45346
+1489911787348	Marionette	INFO	Listening on port 45346
+1489911787572	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/27576c3, line 4412: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+Handler function NetworkEventActorProxy.addSecurityInfo threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._getSecurityInfo<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:488:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype.onStartRequest@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:429:5
+Line: 1660, column: 0
+console.error: 
+  Handler function NetworkEventActorProxy.addSecurityInfo threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._getSecurityInfo<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:488:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype.onStartRequest@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:429:5
+Line: 1660, column: 0
+Handler function NetworkEventActorProxy.addResponseContent threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._onComplete@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:621:5
+NetworkResponseListener.prototype.onStreamClose@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:578:7
+NetworkResponseListener.prototype.onInputStreamReady@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:669:7
+Line: 1660, column: 0
+console.error: 
+  Handler function NetworkEventActorProxy.addResponseContent threw an exception: [Exception... "Component returned failure code: 0xc1f30001 (NS_ERROR_NOT_INITIALIZED) [nsIMessageSender.sendAsyncMessage]"  nsresult: "0xc1f30001 (NS_ERROR_NOT_INITIALIZED)"  location: "JS frame :: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js :: NetworkEventActorProxy.methodFactory/< :: line 1660"  data: no]
+Stack: NetworkEventActorProxy.methodFactory/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:1660:5
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+NetworkResponseListener.prototype._onComplete@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:621:5
+NetworkResponseListener.prototype.onStreamClose@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:578:7
+NetworkResponseListener.prototype.onInputStreamReady@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/webconsole/network-monitor.js:669:7
+Line: 1660, column: 0
+1489913835498	geckodriver	INFO	Listening on 127.0.0.1:36175
+1489913836533	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.6OWMbRax0zq7
+1489913836534	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1489913836535	geckodriver::marionette	INFO	Connecting to Marionette on localhost:34626
+1489913837001	Marionette	INFO	Listening on port 34626
+1489913837260	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4412: unreachable code after return statement
+1489913949422	geckodriver	INFO	Listening on 127.0.0.1:51699
+1489913950461	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.lMYeyDQSm2SR
+1489913950461	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1489913950463	geckodriver::marionette	INFO	Connecting to Marionette on localhost:33141
+1489913950937	Marionette	INFO	Listening on port 33141
+1489913951158	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4412: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4102: unreachable code after return statement
+JavaScript warning: http://dev.lodigroup.com:8072/web/js/web.assets_backend/18f73bb, line 4412: unreachable code after return statement

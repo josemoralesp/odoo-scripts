@@ -240,6 +240,26 @@ class SaleTest():
         driver.execute_script(
             "$('div.modal-content button:contains(Apply)').click()")
 
+    def create_invoice(self):
+        driver = self.driver
+        time.sleep(6)
+        driver.execute_script(
+            "$('button.oe_button.oe_form_button.oe_highlight:"
+            "contains(Create Invoice):not(.oe_form_invisible)').click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$('div.modal-content button:contains(Create)').click()"
+            )
+        time.sleep(7)
+        driver.execute_script(
+            "$('div[data-view-type=list]:not([style])')."
+            "find('tr :contains(Administrator)').click()")
+        time.sleep(4)
+        driver.execute_script(
+            "$('button.oe_button.oe_form_button."
+            "oe_highlight:contains(Validate)').click()"
+            )
+
 
 @click.command()
 @click.option('-server',
@@ -267,6 +287,7 @@ def main(server, user, password, db):
     sale.validate_pick()
     sale.validate_pack()
     sale.validate_out()
+    sale.create_invoice()
 
 if __name__ == '__main__':
     main()
