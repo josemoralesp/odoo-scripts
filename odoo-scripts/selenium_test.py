@@ -301,11 +301,11 @@ class SaleTest():
 
 @click.command()
 @click.option('-server',
-              default='http://dev.lodigroup.com:8072',
+              default='',
               prompt='Server',
               help='Url of the server to create connection')
-@click.option('',
-              default='nhomar@vauxoo.com',
+@click.option('-user',
+              default='',
               prompt='User',
               help='User to do the login')
 @click.option('-password',
