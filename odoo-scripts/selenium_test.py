@@ -1,10 +1,11 @@
+# pip install selenium==2.53.6
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 import time
 import click
 
 
-class SaleTest():
+class BasicFlow():
 
     def __init__(self, **args):
         self.driver = webdriver.Firefox()
@@ -116,96 +117,32 @@ class SaleTest():
         buttonconfirm.click()
         time.sleep(3)
 
-    def fill_wave(self, product_name, location, qty):
-        """Used to fill the needed data in the new window used to pick product
-        from a specific location"""
-        driver = self.driver
-        driver.execute_script(
-            "$('#filterbox').val('%s').keyup()" % product_name)
-        time.sleep(1)
-        driver.execute_script(
-            "$('td.location_f input').val('%s').keyup()" % location)
-        time.sleep(1)
-        driver.execute_script(
-            "$('td.quantity_f input').val('%s').keyup()" % qty)
-        time.sleep(1)
-        driver.execute_script(
-            "$('td.quantity_f input').trigger("
-            "{type: 'keypress', which: 13, keyCode: 13});")
-        time.sleep(2)
-
     def validate_pick(self):
         """Validate a picking of type picking. The only picking in the list
-        with state Waiting Availability. To complete the validation process for
-        this picking it is needed to create a new wave and validate the picking
-        from it, using the new window created to be used from waves, where you
-        specify the location where the quant are taken
-
-        In this process we test som functionalities of wave view, to verify the
-        search box and the warning messages showed when you try to reserve more
-        than the required by the picking
+        with state Waiting Availability.
         """
         driver = self.driver
         driver.execute_script(
             "$($('.oe_list_content')[3])."
             "find('tr :contains(Waiting Availability)').click()")
         time.sleep(2)
-        driver.execute_script("$('li a:contains(Additional Info)').click()")
-        driver.execute_script("$('.oe_form_button_edit')[1].click()")
         driver.execute_script(
-            "$('td.oe_form_group_cell_label:contains(Picking Wave)').next()"
-            ".find('.oe_m2o_drop_down_button').click()")
-        time.sleep(1)
-        driver.execute_script(
-            "$('li.oe_m2o_dropdown_option "
-            "a:contains(Create and Edit...)').click()")
+            "$('button.oe_button.oe_form_button."
+            "oe_highlight:contains(Check Availability)').click()"
+            )
         time.sleep(2)
         driver.execute_script(
-            "$('div.modal-content button:contains(Confirm)').click()")
-        time.sleep(1)
+            "$('button.oe_button.oe_form_button."
+            "oe_highlight:contains(Transfer)').click()"
+            )
+        time.sleep(4)
         driver.execute_script(
-            "$('div.modal-content button:contains(Save)').click()")
-        time.sleep(1)
+            "$('div.modal-content button:contains(Apply)').click()")
+        time.sleep(4)
         driver.execute_script(
-            "$('span.oe_form_buttons_edit button:contains(Save)')[1].click()")
-        time.sleep(1)
-        driver.execute_script(
-            "$('a:contains(Wave/)').click()")
-        time.sleep(3)
-        driver.execute_script(
-            "$('button:contains(Pick Products)').click()")
-        time.sleep(7)
-        self.fill_wave('Wrong Product', 'Stock', 13)
-        self.click_outside()
-        self.fill_wave('3P-CECHB', 'Stock', 13)
-        time.sleep(2)
-        self.fill_wave('3P-CECHB', 'Stock', 2)
-        self.fill_wave('3P-CECHB', 'Stock', 5)
-        self.fill_wave('3P-CECHB', 'Stock', 4)
-        self.click_outside()
-        self.fill_wave('3P-CECHB', 'Stock', 3)
-        time.sleep(2)
-        driver.execute_script(
-            "$('button:contains(Quit)').click()")
-        time.sleep(7)
-        driver.execute_script(
-            "$('button:contains(Done)').click()")
-        time.sleep(3)
-        driver.execute_script(
-            "$('td.oe_list_field_cell:contains(WH/PICK)').click()")
-        time.sleep(2)
-        driver.execute_script(
-            "$('div.modal-content li a:contains(Additional Info)').click()")
-        time.sleep(1)
-        driver.execute_script(
-            "$('div.modal-content a:contains(SO-)').click()")
-        time.sleep(3)
-        driver.execute_script(
-            "$('div.modal-header button.close').click()")
-        time.sleep(1)
-        driver.execute_script(
-            "$('button:contains(Pickings)').click()")
-        time.sleep(3)
+            """$('li a[data-view-type="list"]').click()"""
+            )
+        time.sleep(4)
 
     def validate_pack(self):
         """Validate the picking of type pack after the pick was validated.
@@ -299,6 +236,100 @@ class SaleTest():
             )
 
 
+class SaleTestApex(BasicFlow):
+
+    def fill_wave(self, product_name, location, qty):
+        """Used to fill the needed data in the new window used to pick product
+        from a specific location"""
+        driver = self.driver
+        driver.execute_script(
+            "$('#filterbox').val('%s').keyup()" % product_name)
+        time.sleep(1)
+        driver.execute_script(
+            "$('td.location_f input').val('%s').keyup()" % location)
+        time.sleep(1)
+        driver.execute_script(
+            "$('td.quantity_f input').val('%s').keyup()" % qty)
+        time.sleep(1)
+        driver.execute_script(
+            "$('td.quantity_f input').trigger("
+            "{type: 'keypress', which: 13, keyCode: 13});")
+        time.sleep(2)
+
+    def validate_pick(self):
+        """Validate a picking of type picking. The only picking in the list
+        with state Waiting Availability. To complete the validation process for
+        this picking it is needed to create a new wave and validate the picking
+        from it, using the new window created to be used from waves, where you
+        specify the location where the quant are taken
+
+        In this process we test som functionalities of wave view, to verify the
+        search box and the warning messages showed when you try to reserve more
+        than the required by the picking
+        """
+        driver = self.driver
+        driver.execute_script(
+            "$($('.oe_list_content')[3])."
+            "find('tr :contains(Waiting Availability)').click()")
+        time.sleep(2)
+        driver.execute_script("$('li a:contains(Additional Info)').click()")
+        driver.execute_script("$('.oe_form_button_edit')[1].click()")
+        driver.execute_script(
+            "$('td.oe_form_group_cell_label:contains(Picking Wave)').next()"
+            ".find('.oe_m2o_drop_down_button').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('li.oe_m2o_dropdown_option "
+            "a:contains(Create and Edit...)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('div.modal-content button:contains(Confirm)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('div.modal-content button:contains(Save)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('span.oe_form_buttons_edit button:contains(Save)')[1].click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('a:contains(Wave/)').click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$('button:contains(Pick Products)').click()")
+        time.sleep(7)
+        self.fill_wave('Wrong Product', 'Stock', 13)
+        self.click_outside()
+        self.fill_wave('3P-CECHB', 'Stock', 13)
+        time.sleep(2)
+        self.fill_wave('3P-CECHB', 'Stock', 2)
+        self.fill_wave('3P-CECHB', 'Stock', 5)
+        self.fill_wave('3P-CECHB', 'Stock', 4)
+        self.click_outside()
+        self.fill_wave('3P-CECHB', 'Stock', 3)
+        time.sleep(2)
+        driver.execute_script(
+            "$('button:contains(Quit)').click()")
+        time.sleep(7)
+        driver.execute_script(
+            "$('button:contains(Done)').click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$('td.oe_list_field_cell:contains(WH/PICK)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('div.modal-content li a:contains(Additional Info)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('div.modal-content a:contains(SO-)').click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$('div.modal-header button.close').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('button:contains(Pickings)').click()")
+        time.sleep(3)
+
+
 @click.command()
 @click.option('-server',
               default='',
@@ -317,8 +348,9 @@ class SaleTest():
               prompt='DB',
               help='User to do the login')
 def main(server, user, password, db):
-    sale = SaleTest(server=server, user=user,
-                    password=password, db=db)
+    sale = SaleTestApex(
+        server=server, user=user,
+        password=password, db=db)
     sale.go_to_sale_form()
     sale.fill_form()
     sale.go_to_pickings()
