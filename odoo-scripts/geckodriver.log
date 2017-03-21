@@ -1,0 +1,88 @@
+1490052914164	geckodriver	INFO	Listening on 127.0.0.1:46471
+1490052915194	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.9XCy0GZEAj8F
+1490052915195	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1490052915196	geckodriver::marionette	INFO	Connecting to Marionette on localhost:32802
+1490052915677	Marionette	INFO	Listening on port 32802
+1490052915898	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4102: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4338: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4102: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4338: unreachable code after return statement
+1490053194269	geckodriver	INFO	Listening on 127.0.0.1:37025
+1490053195304	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.j21WoZgzMwAq
+1490053195305	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1490053195306	geckodriver::marionette	INFO	Connecting to Marionette on localhost:32910
+1490053195778	Marionette	INFO	Listening on port 32910
+1490053195997	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4102: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4338: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4102: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4338: unreachable code after return statement
+1490053344579	geckodriver	INFO	Listening on 127.0.0.1:52055
+1490053345613	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.Nave1N47wVap
+1490053345613	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1490053345615	geckodriver::marionette	INFO	Connecting to Marionette on localhost:46159
+1490053346089	Marionette	INFO	Listening on port 46159
+1490053346315	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4102: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4338: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4102: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4338: unreachable code after return statement
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/webbrowser.js, line 2508: TypeError: can't access dead object
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/webbrowser.js, line 2508: TypeError: can't access dead object
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/webbrowser.js, line 2508: TypeError: can't access dead object
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/webbrowser.js, line 2508: TypeError: can't access dead object
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/webbrowser.js, line 2508: TypeError: can't access dead object
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/webbrowser.js, line 2508: TypeError: can't access dead object
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/webbrowser.js, line 2508: TypeError: can't access dead object
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/webbrowser.js, line 2508: TypeError: can't access dead object
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/webbrowser.js, line 2508: TypeError: can't access dead object
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/webbrowser.js, line 2508: TypeError: can't access dead object
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/webbrowser.js, line 2508: TypeError: can't access dead object
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/webbrowser.js, line 2508: TypeError: can't access dead object
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+[Child 21810] ###!!! ABORT: Aborting on channel error.: file /build/firefox-ZQQBpC/firefox-52.0+build2/ipc/glue/MessageChannel.cpp, line 2143
+
+###!!! [Child][MessageChannel] Error: (msgtype=0xE40003,name=PTexture::Msg_Destroy) Channel error: cannot send/recv
+
+[Child 21810] ###!!! ABORT: Aborting on channel error.: file /build/firefox-ZQQBpC/firefox-52.0+build2/ipc/glue/MessageChannel.cpp, line 2143
+1490054371583	geckodriver	INFO	Listening on 127.0.0.1:53950
+1490054372620	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.AAX97QC6bHiO
+1490054372621	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1490054372622	geckodriver::marionette	INFO	Connecting to Marionette on localhost:36758
+1490054373101	Marionette	INFO	Listening on port 36758
+1490054373321	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4102: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4338: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4102: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4338: unreachable code after return statement
+1490054656006	geckodriver	INFO	Listening on 127.0.0.1:45951
+1490054657048	mozprofile::profile	INFO	Using profile path /tmp/rust_mozprofile.JfUOeeBcfmEB
+1490054657048	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args []
+1490054657050	geckodriver::marionette	INFO	Connecting to Marionette on localhost:33699
+1490054657534	Marionette	INFO	Listening on port 33699
+1490054657758	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4102: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4338: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4102: unreachable code after return statement
+JavaScript warning: http://exim80.updates.lodigroup.com/web/js/web.assets_backend/2f1fddf, line 4338: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************

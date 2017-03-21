@@ -234,12 +234,17 @@ class BasicFlow(object):
         time.sleep(7)
         driver.execute_script(
             "$('div[data-view-type=list]:not([style])')."
-            "find('tr td.oe_list_field_cell.oe_list_field_char:"
-            "contains(OUT/)').click()")
+            """find('tr td[data-field="origin"]"""
+            ".oe_list_field_cell.oe_list_field_char:contains(OUT/)').click()")
         time.sleep(4)
         driver.execute_script(
             "$('button.oe_button.oe_form_button."
             "oe_highlight:contains(Validate)').click()"
+            )
+        time.sleep(4)
+        driver.execute_script(
+            "$('button.oe_button.oe_form_button.oe_highlight:"
+            "contains(Sign)').click()"
             )
 
 
@@ -363,6 +368,28 @@ class SaleTestLodi(BasicFlow):
         return res
 
 
+class SaleTestExim(BasicFlow):
+
+    def validate_out(self):
+        """Then the pickings were validated we go ahead to create the invoice
+        from the last picking validated and the validate it to complete the
+        sale process for this test"""
+        driver = self.driver
+        time.sleep(3)
+        driver.execute_script(
+            "$('button.oe_button.oe_form_button."
+            "oe_highlight:contains(Check Availability)').click()"
+            )
+        time.sleep(2)
+        driver.execute_script(
+            "$('button.oe_button.oe_form_button."
+            "oe_highlight:contains(Transfer)').click()"
+            )
+        time.sleep(4)
+        driver.execute_script(
+            "$('div.modal-content button:contains(Apply)').click()")
+
+
 @click.command()
 @click.option('-server',
               default='',
@@ -387,25 +414,41 @@ class SaleTestLodi(BasicFlow):
 def main(server, user, password, db, com):
     classes_dict = {
         'apex': 'SaleTestApex',
-        'lodi': 'SaleTestLodi'
+        'lodi': 'SaleTestLodi',
+        'exim': 'SaleTestExim',
     }
     class_obj = globals()[classes_dict.get(com, 'BasicFlow')]
+    partner = {
+        'lodi': 'Refaccionaria Mario Garcia S.A. De C.V.',
+        'apex': 'ABA SEGUROS, S.A. DE C.V.',
+        'exim': 'Acabados Rectificados Garcia S.A.',
+    }
+    product = {
+        'lodi': 'A-521',
+        'apex': '3P-CECHB',
+        'exim': 'FUN-I0014',
+    }
     values = {
         'server': server,
         'user': user,
         'password': password,
         'db': db,
-        'partner': com != 'apex' and 'Refaccionaria Mario Garcia S.A. De C.V.',
-        'product': com != 'apex' and 'A-521'
+        'partner': partner.get(com),
+        'product': product.get(com)
     }
+
     sale = class_obj(**values)
     sale.go_to_sale_form()
     sale.fill_form()
     sale.go_to_pickings()
-    sale.validate_pick()
-    sale.validate_pack()
-    sale.validate_out()
-    sale.create_invoice()
+    if com in ('lodi', 'apex'):
+        sale.validate_pick()
+        sale.validate_pack()
+        sale.validate_out()
+        sale.create_invoice()
+    elif com == 'exim':
+        sale.validate_out()
+        sale.create_invoice()
 
 if __name__ == '__main__':
     main()
