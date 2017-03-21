@@ -241,7 +241,7 @@ class BasicFlow(object):
             "$('button.oe_button.oe_form_button."
             "oe_highlight:contains(Validate)').click()"
             )
-        time.sleep(4)
+        time.sleep(5)
         driver.execute_script(
             "$('button.oe_button.oe_form_button.oe_highlight:"
             "contains(Sign)').click()"
@@ -416,17 +416,20 @@ def main(server, user, password, db, com):
         'apex': 'SaleTestApex',
         'lodi': 'SaleTestLodi',
         'exim': 'SaleTestExim',
+        'wohlert': 'SaleTestExim',
     }
     class_obj = globals()[classes_dict.get(com, 'BasicFlow')]
     partner = {
         'lodi': 'Refaccionaria Mario Garcia S.A. De C.V.',
         'apex': 'ABA SEGUROS, S.A. DE C.V.',
         'exim': 'Acabados Rectificados Garcia S.A.',
+        'wohlert': 'GENERAL MOTORS CUSTOMER CARE AND AFTERSA',
     }
     product = {
         'lodi': 'A-521',
         'apex': '3P-CECHB',
         'exim': 'FUN-I0014',
+        'wohlert': '3991407',
     }
     values = {
         'server': server,
@@ -446,7 +449,7 @@ def main(server, user, password, db, com):
         sale.validate_pack()
         sale.validate_out()
         sale.create_invoice()
-    elif com == 'exim':
+    elif com in ('exim', 'wohlert'):
         sale.validate_out()
         sale.create_invoice()
 
