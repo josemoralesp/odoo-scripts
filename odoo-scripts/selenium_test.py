@@ -390,6 +390,103 @@ class SaleTestExim(BasicFlow):
             "$('div.modal-content button:contains(Apply)').click()")
 
 
+class SaleTestAbas(BasicFlow):
+
+    def go_to_sale_form(self):
+        """Method used to move us from main window to view for of sale order
+        """
+        driver = self.driver
+        time.sleep(2)
+        driver.execute_script(
+            "$('a.o_app div:contains(Point of Sale)').click()")
+        time.sleep(5)
+        driver.execute_script(
+            "$('div.o_kanban_record:contains(Administrator) "
+            "button:contains(Resume)').click()")
+        driver.execute_script(
+            "$('div.o_kanban_record:contains(Test Admin) "
+            "button:contains(New Session)').click()")
+
+    def fill_form(self, partner=False):
+        """
+        """
+        driver = self.driver
+        if partner:
+            raw_input('Press Enter after the POS is loaded')
+            driver.execute_script(
+                "$('button:contains(Customer)').click()")
+            time.sleep(2)
+            driver.execute_script(
+                "$('span.searchbox input')."
+                "val('AREPAS A LA MEXICANA CON SABOR VENEZOLANO SA DE CV')")
+            time.sleep(1)
+            driver.execute_script(
+                "$('span.searchbox input').trigger("
+                "{type: 'keypress', which: 13, keyCode: 13})")
+            time.sleep(2)
+        products = driver.find_elements_by_xpath(
+            "//span[@class='product']/div/span[@class='qty-tag']"
+            "[not(contains(., 0 ))]")
+        for product in products[:len(products) > 9 and 10 or 1]:
+            product.click()
+        time.sleep(2)
+        driver.execute_script(
+            "$('button:contains(Payment)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('div.paymentmethod:contains(Efectivo - GS C2 (MXN)').click()")
+        time.sleep(1)
+        amount = driver.find_element_by_xpath("//td[@class='col-due']").text
+        for val in amount:
+            driver.execute_script(
+                "$('section.payment-numpad div.numpad button.input-button."
+                "number-char:contains(%s)').click()" % val)
+            time.sleep(1)
+        time.sleep(2)
+        driver.execute_script(
+            "$('span.next:contains(Validate)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('span:contains(Next Order)').click()")
+        if partner:
+            time.sleep(2)
+            self.fill_form()
+
+
+    def close_session(self):
+        """Close the session used in the POS
+        """
+        driver = self.driver
+        time.sleep(3)
+        driver.execute_script(
+            "$('div.header-button:contains(Close)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('div.header-button:contains(Confirm)').click()")
+        raw_input('Press Enter after the POS is closed')
+        driver.execute_script(
+            "$('div.o_kanban_record:contains(Administrator) "
+            "button:contains(Close)').click()")
+        time.sleep(6)
+        driver.execute_script(
+            "$('button:contains(Validate Closing & Post Entries):"
+            """not(".o_form_invisible")').click()""")
+        time.sleep(10)
+        driver.execute_script(
+            "$('li a.dropdown-toggle:contains(Orders)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('li.open ul.dropdown-menu li "
+            "a.o_menu_entry_lvl_2:contains(Orders)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('table.o_list_view.table.table-condensed.table-striped "
+            "td[data-field=name]')[0].click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$('a:contains(Extra Info)').click()")
+
+
 @click.command()
 @click.option('-server',
               default='',
@@ -417,6 +514,7 @@ def main(server, user, password, db, com):
         'lodi': 'SaleTestLodi',
         'exim': 'SaleTestExim',
         'wohlert': 'SaleTestExim',
+        'abastotal': 'SaleTestAbas',
     }
     class_obj = globals()[classes_dict.get(com, 'BasicFlow')]
     partner = {
@@ -441,9 +539,15 @@ def main(server, user, password, db, com):
     }
 
     sale = class_obj(**values)
-    sale.go_to_sale_form()
-    sale.fill_form()
-    sale.go_to_pickings()
+    if com == 'abastotal':
+        sale.go_to_sale_form()
+        sale.fill_form(True)
+        sale.close_session()
+
+    else:
+        sale.go_to_sale_form()
+        sale.fill_form()
+        sale.go_to_pickings()
     if com in ('lodi', 'apex'):
         sale.validate_pick()
         sale.validate_pack()
