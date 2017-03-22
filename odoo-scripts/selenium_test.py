@@ -51,10 +51,8 @@ class BasicFlow(object):
     def click_outside(self):
         """Used to do click in somewhere in the window to trigger the
         onchange"""
-        fieldinput = "html"
-        fieldinput = WebDriverWait(self.driver, 10).until(
-            lambda driver: driver.find_element_by_xpath(fieldinput))
-        fieldinput.click()
+        self.driver.execute_script(
+            "$('div.oe_form_sheet.oe_form_sheet_width').click()")
         time.sleep(1)
 
     def fill_form(self):
