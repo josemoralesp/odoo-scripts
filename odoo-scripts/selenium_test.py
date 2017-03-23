@@ -60,7 +60,7 @@ class BasicFlow(object):
         partner and product
 
         The partner used in this test was: ABA SEGUROS, S.A. DE C.V.
-        The product used was: 3P-CECHB
+        The product used was: 6002
 
         The quantity and the price was modified after the product was loaded
         and the fields computed by onchange method returned, this to verify the
@@ -87,7 +87,7 @@ class BasicFlow(object):
         product = WebDriverWait(driver, 10).until(
             lambda driver: driver.find_element_by_xpath(product))
         product.clear()
-        product.send_keys(self.product or '3P-CECHB')
+        product.send_keys(self.product or '6002')
         time.sleep(1)
 
         self.click_outside()
@@ -174,7 +174,7 @@ class BasicFlow(object):
             time.sleep(2)
             driver.execute_script(
                 """$('textarea[name="scan_data"]').val('%s*2')""" %
-                (self.product or '3P-CECHB'))
+                (self.product or '6002'))
             time.sleep(1)
             driver.execute_script(
                 """$('textarea[name="scan_data"]').focus()."""
@@ -239,7 +239,7 @@ class BasicFlow(object):
             "$('button.oe_button.oe_form_button."
             "oe_highlight:contains(Validate)').click()"
             )
-        time.sleep(5)
+        time.sleep(8)
         driver.execute_script(
             "$('button.oe_button.oe_form_button.oe_highlight:"
             "contains(Sign)').click()"
@@ -309,20 +309,20 @@ class SaleTestApex(BasicFlow):
         time.sleep(7)
         self.fill_wave('Wrong Product', 'Stock', 13)
         self.click_outside()
-        self.fill_wave(self.product or '3P-CECHB', 'Stock', 13)
+        self.fill_wave(self.product or '6002', 'Stock', 13)
         time.sleep(2)
-        self.fill_wave(self.product or '3P-CECHB', 'Stock', 2)
-        self.fill_wave(self.product or '3P-CECHB', 'Stock', 5)
-        self.fill_wave(self.product or '3P-CECHB', 'Stock', 4)
+        self.fill_wave(self.product or '6002', 'Stock', 2)
+        self.fill_wave(self.product or '6002', 'Stock', 5)
+        self.fill_wave(self.product or '6002', 'Stock', 4)
         self.click_outside()
-        self.fill_wave(self.product or '3P-CECHB', 'Stock', 3)
+        self.fill_wave(self.product or '6002', 'Stock', 3)
         time.sleep(2)
         driver.execute_script(
             "$('button:contains(Quit)').click()")
-        time.sleep(7)
+        time.sleep(10)
         driver.execute_script(
             "$('button:contains(Done)').click()")
-        time.sleep(3)
+        time.sleep(5)
         driver.execute_script(
             "$('td.oe_list_field_cell:contains(WH/PICK)').click()")
         time.sleep(2)
@@ -523,7 +523,7 @@ def main(server, user, password, db, com):
     }
     product = {
         'lodi': 'A-521',
-        'apex': '3P-CECHB',
+        'apex': '6002',
         'exim': 'FUN-I0014',
         'wohlert': '3991407',
     }
@@ -537,6 +537,7 @@ def main(server, user, password, db, com):
     }
 
     sale = class_obj(**values)
+    time.sleep(2)
     if com == 'abastotal':
         sale.go_to_sale_form()
         sale.fill_form(True)
