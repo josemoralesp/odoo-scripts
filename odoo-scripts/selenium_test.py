@@ -8,7 +8,14 @@ import click
 class BasicFlow(object):
 
     def __init__(self, **args):
-        self.driver = webdriver.Firefox()
+        fp = webdriver.FirefoxProfile()
+        fp.set_preference("browser.download.dir", '/tmp')
+        fp.set_preference("browser.helperApps.neverAsk.saveToDisk",
+                          "application/pdf")
+        fp.set_preference("browser.download.folderList", 2)
+        fp.set_preference("browser.download.manager.showWhenStarting", False)
+        fp.set_preference("pdfjs.disabled", True)
+        self.driver = webdriver.Firefox(firefox_profile=fp)
         self.driver.implicitly_wait(15)
         self.product = args.get('product')
         self.partner = args.get('partner')
@@ -215,6 +222,11 @@ class BasicFlow(object):
         time.sleep(4)
         driver.execute_script(
             "$('div.modal-content button:contains(Apply)').click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$('button:contains(Delivery Order):"
+            "not(.oe_form_invisible)').click()")
+        time.sleep(3)
 
     def create_invoice(self):
         """Then the pickings were validated we go ahead to create the invoice
@@ -517,7 +529,7 @@ def main(server, user, password, db, com):
     class_obj = globals()[classes_dict.get(com, 'BasicFlow')]
     partner = {
         'lodi': 'Refaccionaria Mario Garcia S.A. De C.V.',
-        'apex': 'ABA SEGUROS, S.A. DE C.V.',
+        'apex': 'Industrias Automotrices Lodi S.A. De C.V.',
         'exim': 'Acabados Rectificados Garcia S.A.',
         'wohlert': 'GENERAL MOTORS CUSTOMER CARE AND AFTERSA',
     }
