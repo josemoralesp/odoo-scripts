@@ -257,7 +257,6 @@ class BasicFlow(object):
             "contains(Sign)').click()"
             )
 
-
 class SaleTestApex(BasicFlow):
 
     def fill_wave(self, product_name, location, qty):
@@ -417,7 +416,7 @@ class SaleTestAbas(BasicFlow):
             "$('div.o_kanban_record:contains(Test Admin) "
             "button:contains(New Session)').click()")
 
-    def fill_pos_form(self, partner=False):
+    def fill_pos_form(self, partner=True):
         """
         """
         driver = self.driver
@@ -428,7 +427,7 @@ class SaleTestAbas(BasicFlow):
             time.sleep(2)
             driver.execute_script(
                 "$('span.searchbox input')."
-                "val('AREPAS A LA MEXICANA CON SABOR VENEZOLANO SA DE CV')")
+                "val('%s')" % self.partner)
             time.sleep(1)
             driver.execute_script(
                 "$('span.searchbox input').trigger("
@@ -460,7 +459,7 @@ class SaleTestAbas(BasicFlow):
             "$('span:contains(Next Order)').click()")
         if partner:
             time.sleep(2)
-            self.fill_form()
+            self.fill_pos_form(False)
 
     def close_session(self):
         """Close the session used in the POS
@@ -494,6 +493,10 @@ class SaleTestAbas(BasicFlow):
         time.sleep(3)
         driver.execute_script(
             "$('a:contains(Extra Info)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('i.fa.fa-th').click()")
+        time.sleep(3)
 
     def go_to_sale_form(self):
         """Method used to move us from main window to view for of sale order
@@ -667,7 +670,7 @@ def main(server, user, password, db, com):
         'apex': 'Industrias Automotrices Lodi S.A. De C.V.',
         'exim': 'Acabados Rectificados Garcia S.A.',
         'wohlert': 'GENERAL MOTORS CUSTOMER CARE AND AFTERSA',
-        'abastotal': 'Arepas a la mexicana',
+        'abastotal': 'AREPAS A LA MEXICANA CON SABOR VENEZOLANO SA DE CV',
     }
     product = {
         'lodi': 'A-521',
@@ -686,32 +689,24 @@ def main(server, user, password, db, com):
         'product': product.get(com)
     }
 
-    sale = class_obj(**values)
-    time.sleep(2)
-    if com == 'abastotal':
-        sale.go_to_pos_form()
-        sale.fill_pos_form(True)
-        sale.close_session()
-        sale = class_obj(**values)
-        time.sleep(2)
-        sale.go_to_sale_form()
-        sale.fill_form()
-        sale.create_invoice()
-        sale.go_to_pickings()
-        sale.validate_out()
+    lodi_list = ['go_to_sale_form', 'fill_form', 'go_to_pickings',
+                 'validate_pick', 'validate_pack', 'validate_out',
+                 'create_invoice']
+    exim_list = ['go_to_sale_form', 'fill_form', 'go_to_pickings',
+                 'validate_out', 'create_invoice']
+    methods = {
+        'abastotal': ['go_to_pos_form', 'fill_pos_form', 'close_session',
+                      'go_to_sale_form', 'fill_form', 'create_invoice',
+                      'go_to_pickings', 'validate_out'],
+        'lodi': lodi_list,
+        'apex': lodi_list,
+        'exim': exim_list,
+        'wohlert': exim_list,
+    }
 
-    else:
-        sale.go_to_sale_form()
-        sale.fill_form()
-        sale.go_to_pickings()
-    if com in ('lodi', 'apex'):
-        sale.validate_pick()
-        sale.validate_pack()
-        sale.validate_out()
-        sale.create_invoice()
-    elif com in ('exim', 'wohlert'):
-        sale.validate_out()
-        sale.create_invoice()
+    sale = class_obj(**values)
+    for method in methods.get(com, exim_list):
+        getattr(sale, method)()
 
 if __name__ == '__main__':
     main()
