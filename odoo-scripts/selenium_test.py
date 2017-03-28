@@ -1,4 +1,4 @@
-# pip install selenium==2.53.6
+# coding: utf-8
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 import time
@@ -402,7 +402,7 @@ class SaleTestExim(BasicFlow):
 
 class SaleTestAbas(BasicFlow):
 
-    def go_to_sale_form(self):
+    def go_to_pos_form(self):
         """Method used to move us from main window to view for of sale order
         """
         driver = self.driver
@@ -417,7 +417,7 @@ class SaleTestAbas(BasicFlow):
             "$('div.o_kanban_record:contains(Test Admin) "
             "button:contains(New Session)').click()")
 
-    def fill_form(self, partner=False):
+    def fill_pos_form(self, partner=False):
         """
         """
         driver = self.driver
@@ -462,7 +462,6 @@ class SaleTestAbas(BasicFlow):
             time.sleep(2)
             self.fill_form()
 
-
     def close_session(self):
         """Close the session used in the POS
         """
@@ -495,6 +494,142 @@ class SaleTestAbas(BasicFlow):
         time.sleep(3)
         driver.execute_script(
             "$('a:contains(Extra Info)').click()")
+
+    def go_to_sale_form(self):
+        """Method used to move us from main window to view for of sale order
+        """
+        driver = self.driver
+        time.sleep(2)
+        driver.execute_script(
+            "$('a.o_app div:contains(Sales)').click()")
+        time.sleep(5)
+        driver.execute_script(
+            "$('a.dropdown-toggle:contains(Sales)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('a:contains(Sales Orders):not(.oe_kanban_action)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('button:contains(Create)').click()")
+
+    def fill_form(self):
+        """Fill the form for a new sale order, testing the onchanges for
+        partner and product
+
+        The partner used in this test was: ABA SEGUROS, S.A. DE C.V.
+        The product used was: 6002
+
+        The quantity and the price was modified after the product was loaded
+        and the fields computed by onchange method returned, this to verify the
+        recompute of the price
+        """
+        driver = self.driver
+        time.sleep(2)
+        driver.execute_script(
+            "$('td:contains(Customer):not(:contains(Reference))')."
+            "next().find('input').val('%s').keydown()" % self.partner)
+        time.sleep(1)
+        driver.execute_script(
+            "$('a:contains(%s)').click()" % self.partner)
+        time.sleep(1)
+        driver.execute_script(
+            "$('a:contains(Other Information)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('td:contains(Warehouse)').next().find('input').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('li:contains(Garza)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('li:contains(Garza)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('a:contains(Order Lines)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('a:contains(Add an item)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('div[data-fieldname=product_id] div input').val('%s').keydown()"
+            % self.product)
+        time.sleep(2)
+        driver.execute_script(
+            "$('a:contains(PET64B-DL)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('td[data-field=product_uom_qty]').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('input[data-fieldname=product_uom_qty]').val(10)")
+        self.click_outside()
+        time.sleep(2)
+        driver.execute_script(
+            "$('button:contains(Confirm Sale):"
+            "not(.o_form_invisible)').click()")
+
+    def click_outside(self):
+        """Used to do click in somewhere in the window to trigger the
+        onchange"""
+        self.driver.execute_script(
+            "$('div.o_form_sheet').click()")
+        time.sleep(1)
+
+    def create_invoice(self):
+        """Then the order was validated we go ahead to create the invoice
+        from the validated order and the validate it to complete the
+        sale process for this test"""
+        driver = self.driver
+        time.sleep(6)
+        driver.execute_script(
+            "$('button:contains(Create Invoice):"
+            "not(.o_form_invisible)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('button:contains(Create and View Invoices)"
+            ":not(.o_form_invisible)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('button:contains(Edit):not(.o_form_invisible)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('td:contains(Payment Method):not(:contains(Reference))').next()"
+            ".find('input').val('Efectivo').keydown()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('li.ui-menu-item.ui-state-focus:contains(Efectivo)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('button:contains(Validate):not(.o_form_invisible)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('a:contains(SO)').click()")
+
+    def go_to_pickings(self):
+        """Used to move us from order validated to pickings generated by it"""
+        driver = self.driver
+        time.sleep(2)
+        driver.execute_script(
+            "$('button:contains(Delivery)').click()")
+
+    def validate_out(self):
+        """Validate the last picking in the list of pickins generated by the
+        sale order. This pickings contains all quants processed from previous
+        pickings"""
+        driver = self.driver
+        time.sleep(3)
+        driver.execute_script(
+            "$('button:contains(Reserve)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('button:contains(Validate)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('div.modal-content "
+            "button.btn.btn-sm.btn-primary:contains(Apply)').click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$('li a:contains(SO)').click()")
 
 
 @click.command()
@@ -532,12 +667,15 @@ def main(server, user, password, db, com):
         'apex': 'Industrias Automotrices Lodi S.A. De C.V.',
         'exim': 'Acabados Rectificados Garcia S.A.',
         'wohlert': 'GENERAL MOTORS CUSTOMER CARE AND AFTERSA',
+        'abastotal': 'Arepas a la mexicana',
     }
     product = {
         'lodi': 'A-521',
         'apex': '6002',
         'exim': 'FUN-I0014',
         'wohlert': '3991407',
+        'abastotal': ('Tapa Plástica Dart para Ensaladero '
+                      'PET c/4 "24, 32, 48 y 64"'),
     }
     values = {
         'server': server,
@@ -551,9 +689,16 @@ def main(server, user, password, db, com):
     sale = class_obj(**values)
     time.sleep(2)
     if com == 'abastotal':
-        sale.go_to_sale_form()
-        sale.fill_form(True)
+        sale.go_to_pos_form()
+        sale.fill_pos_form(True)
         sale.close_session()
+        sale = class_obj(**values)
+        time.sleep(2)
+        sale.go_to_sale_form()
+        sale.fill_form()
+        sale.create_invoice()
+        sale.go_to_pickings()
+        sale.validate_out()
 
     else:
         sale.go_to_sale_form()
