@@ -405,16 +405,16 @@ class SaleTestAbas(BasicFlow):
         """Method used to move us from main window to view for of sale order
         """
         driver = self.driver
-        time.sleep(2)
-        driver.execute_script(
-            "$('a.o_app div:contains(Point of Sale)').click()")
         time.sleep(5)
         driver.execute_script(
-            "$('div.o_kanban_record:contains(Administrator) "
-            "button:contains(Resume)').click()")
+            "$('a.o_app div:contains(Punto de Venta)').click()")
+        time.sleep(5)
+        driver.execute_script(
+            "$('div.o_kanban_record:contains(Tadeo) "
+            "button:contains(Reanudar)').click()")
         driver.execute_script(
             "$('div.o_kanban_record:contains(Test Admin) "
-            "button:contains(New Session)').click()")
+            "button:contains(Nueva sesión)').click()")
 
     def fill_pos_form(self, partner=True):
         """
@@ -423,7 +423,7 @@ class SaleTestAbas(BasicFlow):
         if partner:
             raw_input('Press Enter after the POS is loaded')
             driver.execute_script(
-                "$('button:contains(Customer)').click()")
+                "$('button:contains(Cliente)').click()")
             time.sleep(2)
             driver.execute_script(
                 "$('span.searchbox input')."
@@ -440,7 +440,7 @@ class SaleTestAbas(BasicFlow):
             product.click()
         time.sleep(2)
         driver.execute_script(
-            "$('button:contains(Payment)').click()")
+            "$('button:contains(Pago)').click()")
         time.sleep(1)
         driver.execute_script(
             "$('div.paymentmethod:contains(Efectivo - GS C2 (MXN)').click()")
@@ -453,10 +453,10 @@ class SaleTestAbas(BasicFlow):
             time.sleep(1)
         time.sleep(2)
         driver.execute_script(
-            "$('span.next:contains(Validate)').click()")
+            "$('span.next:contains(Validar)').click()")
         time.sleep(2)
         driver.execute_script(
-            "$('span:contains(Next Order)').click()")
+            "$('span:contains(Siguiente pedido)').click()")
         if partner:
             time.sleep(2)
             self.fill_pos_form(False)
@@ -470,29 +470,29 @@ class SaleTestAbas(BasicFlow):
             "$('div.header-button:contains(Close)').click()")
         time.sleep(1)
         driver.execute_script(
-            "$('div.header-button:contains(Confirm)').click()")
+            "$('div.header-button:contains(Confirmar)').click()")
         raw_input('Press Enter after the POS is closed')
         driver.execute_script(
-            "$('div.o_kanban_record:contains(Administrator) "
-            "button:contains(Close)').click()")
+            "$('div.o_kanban_record:contains(Tadeo) "
+            "button:contains(Cerrar)').click()")
         time.sleep(6)
         driver.execute_script(
-            "$('button:contains(Validate Closing & Post Entries):"
+            "$('button:contains(Validar y contabilizar asiento):"
             """not(".o_form_invisible")').click()""")
-        time.sleep(10)
+        time.sleep(15)
         driver.execute_script(
-            "$('li a.dropdown-toggle:contains(Orders)').click()")
-        time.sleep(1)
+            "$('li a.dropdown-toggle:contains(Pedidos)').click()")
+        time.sleep(3)
         driver.execute_script(
             "$('li.open ul.dropdown-menu li "
-            "a.o_menu_entry_lvl_2:contains(Orders)').click()")
-        time.sleep(2)
+            "a.o_menu_entry_lvl_2:contains(Pedidos)').click()")
+        time.sleep(6)
         driver.execute_script(
             "$('table.o_list_view.table.table-condensed.table-striped "
             "td[data-field=name]')[0].click()")
         time.sleep(3)
         driver.execute_script(
-            "$('a:contains(Extra Info)').click()")
+            "$('a:contains(Información extra)').click()")
         time.sleep(2)
         driver.execute_script(
             "$('i.fa.fa-th').click()")
@@ -504,16 +504,16 @@ class SaleTestAbas(BasicFlow):
         driver = self.driver
         time.sleep(2)
         driver.execute_script(
-            "$('a.o_app div:contains(Sales)').click()")
+            "$('a.o_app div:contains(Ventas)').click()")
         time.sleep(5)
         driver.execute_script(
-            "$('a.dropdown-toggle:contains(Sales)').click()")
+            "$('a.dropdown-toggle:contains(Ventas)').click()")
         time.sleep(2)
         driver.execute_script(
-            "$('a:contains(Sales Orders):not(.oe_kanban_action)').click()")
+            "$('a:contains(Pedidos de ventas):not(.oe_kanban_action)').click()")
         time.sleep(2)
         driver.execute_script(
-            "$('button:contains(Create)').click()")
+            "$('button:contains(Crear)').click()")
 
     def fill_form(self):
         """Fill the form for a new sale order, testing the onchanges for
@@ -529,17 +529,18 @@ class SaleTestAbas(BasicFlow):
         driver = self.driver
         time.sleep(2)
         driver.execute_script(
-            "$('td:contains(Customer):not(:contains(Reference))')."
+            "$('td:contains(Cliente):not(:contains(Reference))')."
             "next().find('input').val('%s').keydown()" % self.partner)
         time.sleep(1)
         driver.execute_script(
-            "$('a:contains(%s)').click()" % self.partner)
+            "$('a:contains(%s):"
+            "not(:contains(Crear))').click()" % self.partner)
         time.sleep(1)
         driver.execute_script(
-            "$('a:contains(Other Information)').click()")
+            "$('a:contains(Otra información)').click()")
         time.sleep(1)
         driver.execute_script(
-            "$('td:contains(Warehouse)').next().find('input').click()")
+            "$('td:contains(Almacén)').next().find('input').click()")
         time.sleep(1)
         driver.execute_script(
             "$('li:contains(Garza)').click()")
@@ -548,10 +549,10 @@ class SaleTestAbas(BasicFlow):
             "$('li:contains(Garza)').click()")
         time.sleep(1)
         driver.execute_script(
-            "$('a:contains(Order Lines)').click()")
+            "$('a:contains(Líneas de venta)').click()")
         time.sleep(2)
         driver.execute_script(
-            "$('a:contains(Add an item)').click()")
+            "$('a:contains(Agregar un elemento)').click()")
         time.sleep(2)
         driver.execute_script(
             "$('div[data-fieldname=product_id] div input').val('%s').keydown()"
@@ -568,7 +569,7 @@ class SaleTestAbas(BasicFlow):
         self.click_outside()
         time.sleep(2)
         driver.execute_script(
-            "$('button:contains(Confirm Sale):"
+            "$('button:contains(Confirmar venta):"
             "not(.o_form_invisible)').click()")
 
     def click_outside(self):
@@ -585,26 +586,26 @@ class SaleTestAbas(BasicFlow):
         driver = self.driver
         time.sleep(6)
         driver.execute_script(
-            "$('button:contains(Create Invoice):"
+            "$('button:contains(Crear factura):"
             "not(.o_form_invisible)').click()")
         time.sleep(2)
         driver.execute_script(
-            "$('button:contains(Create and View Invoices)"
+            "$('button:contains(Crear y ver facturas)"
             ":not(.o_form_invisible)').click()")
-        time.sleep(2)
+        time.sleep(4)
         driver.execute_script(
             "$('button:contains(Edit):not(.o_form_invisible)').click()")
         time.sleep(2)
         driver.execute_script(
-            "$('td:contains(Payment Method):not(:contains(Reference))').next()"
+            "$('td:contains(Método de Pago):not(:contains(Reference))').next()"
             ".find('input').val('Efectivo').keydown()")
         time.sleep(2)
         driver.execute_script(
             "$('li.ui-menu-item.ui-state-focus:contains(Efectivo)').click()")
         time.sleep(2)
         driver.execute_script(
-            "$('button:contains(Validate):not(.o_form_invisible)').click()")
-        time.sleep(2)
+            "$('button:contains(Validado):not(.o_form_invisible)').click()")
+        time.sleep(3)
         driver.execute_script(
             "$('a:contains(SO)').click()")
 
@@ -613,7 +614,7 @@ class SaleTestAbas(BasicFlow):
         driver = self.driver
         time.sleep(2)
         driver.execute_script(
-            "$('button:contains(Delivery)').click()")
+            "$('button:contains(Entrega)').click()")
 
     def validate_out(self):
         """Validate the last picking in the list of pickins generated by the
@@ -622,17 +623,184 @@ class SaleTestAbas(BasicFlow):
         driver = self.driver
         time.sleep(3)
         driver.execute_script(
-            "$('button:contains(Reserve)').click()")
+            "$('button:contains(Reserv)').click()")
         time.sleep(2)
         driver.execute_script(
-            "$('button:contains(Validate)').click()")
+            "$('button:contains(Valida)').click()")
         time.sleep(2)
         driver.execute_script(
             "$('div.modal-content "
-            "button.btn.btn-sm.btn-primary:contains(Apply)').click()")
+            "button.btn.btn-sm.btn-primary:contains(Aplicar)').click()")
         time.sleep(3)
         driver.execute_script(
             "$('li a:contains(SO)').click()")
+
+    def add_to_cart(self):
+        """Sign in as client and add product to cart
+        """
+        driver = self.driver
+        time.sleep(2)
+        driver.execute_script(
+            "$('i.fa.fa-th').click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$('a.o_app div:contains(Sitio Web)').click()")
+        time.sleep(5)
+        driver.execute_script(
+            "$('input.search-query')."
+            "val('%s')" % self.product)
+        time.sleep(2)
+        driver.execute_script(
+            "$('button.oe_search_button').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('.product_price').find('.fa.fa-shopping-cart').click()")
+        time.sleep(5)
+        driver.execute_script(
+            "$('a span:contains(Procesar Pago)').click()")
+
+    def fill_checkout_form(self):
+        """Fill the billing address form
+        """
+        driver = self.driver
+        time.sleep(2)
+        driver.execute_script(
+            "$('input[name=phone]').val('4773938110')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=mobile]').val('0987654321')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=company_name]').val('Abastotal')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=vat_split]').val('XEXX010101000')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=street]').val('PRUEBA (cancelar cotización por favor)')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=l10n_mx_street3]').val('141')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=l10n_mx_street4]').val('401')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=street2]').val('Prueba')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=city]').val('Prueba')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=zip]').val('37187')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('select[name=state_id] option:contains(Aguascalientes)')."
+            "prop('selected', true)")
+
+    def process_checkout(self):
+        """Select the payment method and process checkout
+        """
+        driver = self.driver
+        time.sleep(2)
+        driver.execute_script(
+            "$('a span.fa-long-arrow-right').click()")
+        time.sleep(5)
+        driver.execute_script(
+            "$('input[value=2][name=acquirer]').click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$('div[data-id=2] button').click()")
+        time.sleep(10)
+        driver.execute_script(
+            "$('span.fa.fa-th').click()")
+
+
+    def fill_shipment_form(self):
+        """Select the payment method
+        """
+        driver = self.driver
+        time.sleep(2)
+        driver.execute_script(
+            "$('select[name=shipping_id] option:contains(Crear una nueva dirección)')."
+            "prop('selected', true)")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=shipping_name]').val('prueba')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=shipping_phone]').val('1472583690')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=shipping_street]').val('avenida')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=shipping_l10n_mx_street3]').val('456')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=shipping_street2]').val('colonia')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=shipping_city]').val('ciudad prueba')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('input[name=shipping_zip]').val('99999')")
+        time.sleep(1)
+        driver.execute_script(
+            "$('select[name=shipping_country_id] option:contains(México)')."
+            "prop('selected', true)")
+        time.sleep(1)
+        driver.execute_script(
+            "$('select[name=shipping_state_id] option:contains(Jalisco)')."
+            "prop('selected', true)")
+
+    def go_to_sale_quotation(self):
+        """
+        """
+        driver = self.driver
+        time.sleep(10)
+        driver.execute_script(
+            "$('a.o_app div:contains(Ventas)').click()")
+        time.sleep(5)
+        driver.execute_script(
+            "$('a.dropdown-toggle:contains(Ventas)').click()")
+        time.sleep(2)
+        driver.execute_script(
+            "$('a:contains(Presupuestos):not(.oe_kanban_action)').click()")
+        time.sleep(5)
+        driver.execute_script(
+            "$('th:contains(Ventas del sitio web)').click()")
+        time.sleep(5)
+        driver.execute_script(
+            "$('table.o_list_view.table.table-condensed.table-striped "
+            "td[data-field=name]')[0].click()")
+
+    def confirm_sale(self):
+        """
+        """
+        driver = self.driver
+        time.sleep(6)
+        driver.execute_script(
+            "$('button:contains(Editar)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('a:contains(Otra información)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('td:contains(Almacén)').next().find('input').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('li:contains(Garza)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('li:contains(Garza)').click()")
+        time.sleep(1)
+        driver.execute_script(
+            "$('button:contains(Guardar)').click()")
+        time.sleep(3)
+        driver.execute_script(
+            "$('button:contains(Confirmar venta):"
+            "not(.o_form_invisible)').click()")
 
 
 @click.command()
@@ -697,6 +865,9 @@ def main(server, user, password, db, com):
     methods = {
         'abastotal': ['go_to_pos_form', 'fill_pos_form', 'close_session',
                       'go_to_sale_form', 'fill_form', 'create_invoice',
+                      'go_to_pickings', 'validate_out',
+                      'add_to_cart', 'fill_checkout_form', 'process_checkout',
+                      'go_to_sale_quotation', 'confirm_sale', 'create_invoice',
                       'go_to_pickings', 'validate_out'],
         'lodi': lodi_list,
         'apex': lodi_list,
